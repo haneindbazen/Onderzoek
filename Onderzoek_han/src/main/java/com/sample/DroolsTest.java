@@ -45,7 +45,7 @@ public class DroolsTest {
         kbuilder.add(ResourceFactory.newClassPathResource("Sample.drl"), ResourceType.DRL);
         KnowledgeBuilderErrors errors = kbuilder.getErrors();
         if (errors.size() > 0) {
-            for (KnowledgeBuilderError error: errors) { 
+            for (KnowledgeBuilderError error: errors) {
                 System.err.println(error);
             }
             throw new IllegalArgumentException("Could not parse knowledge.");
