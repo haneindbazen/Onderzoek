@@ -18,17 +18,22 @@ import org.drools.runtime.StatefulKnowledgeSession;
 public class DroolsTest {
 
     public static final void main(String[] args) {
-        try {
-            // load up the knowledge base
+    	try {
             KnowledgeBase kbase = readKnowledgeBase();
             StatefulKnowledgeSession ksession = kbase.newStatefulKnowledgeSession();
             KnowledgeRuntimeLogger logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
-            // go !
+            
+            
+           //======= Melding =========//
             Message message = new Message();
-            message.setMessage("Hello World");
-            message.setStatus(Message.HELLO);
+            //regel met melding wordt uitgelezen van extern bestand
+            //regel wordt eventueel onderverdeeld in losse kernwoorden
+            message.setMessage("Help, dit is een ongeluk in de ketelstraat 42.");
             ksession.insert(message);
             ksession.fireAllRules();
+           //======================//
+            
+            
             logger.close();
         } catch (Throwable t) {
             t.printStackTrace();
@@ -49,32 +54,4 @@ public class DroolsTest {
         kbase.addKnowledgePackages(kbuilder.getKnowledgePackages());
         return kbase;
     }
-
-    public static class Message {
-
-        public static final int HELLO = 0;
-        public static final int GOODBYE = 1;
-
-        private String message;
-
-        private int status;
-
-        public String getMessage() {
-            return this.message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-
-        public int getStatus() {
-            return this.status;
-        }
-
-        public void setStatus(int status) {
-            this.status = status;
-        }
-
-    }
-
 }

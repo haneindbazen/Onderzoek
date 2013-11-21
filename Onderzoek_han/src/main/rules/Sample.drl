@@ -1,0 +1,17 @@
+package com.sample
+ 
+import com.sample.Message;
+ 
+rule "Melding van brand"
+    when
+    	m: Message (message.toLowerCase().contains("brand"), myMessage : message);
+    then
+        System.out.println( "Brand: " + myMessage );
+end
+
+rule "Melding van ongeluk"
+    when
+        m : Message(message.toLowerCase().contains("ongeluk"), myMessage : message );
+    then
+        System.out.println( "Ongeluk: " + myMessage );
+end
