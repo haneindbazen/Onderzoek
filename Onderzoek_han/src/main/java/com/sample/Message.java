@@ -6,6 +6,7 @@ public class Message {
 
     public String getMessage() {
         return this.message;
+        // ik ben 
     }
 
     public void setMessage(String message) {
