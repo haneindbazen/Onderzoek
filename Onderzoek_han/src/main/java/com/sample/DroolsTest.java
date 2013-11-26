@@ -15,7 +15,7 @@ import org.drools.runtime.StatefulKnowledgeSession;
 /**
  * This is a sample class to launch a rule.
  */
-public class DroolsTest {//
+public class DroolsTest {// ik ben jassine
 
     public static final void main(String[] args) {
     	try {
