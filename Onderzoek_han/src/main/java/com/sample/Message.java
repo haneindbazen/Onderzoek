@@ -2,6 +2,7 @@ package com.sample;
 
 public class Message {
 
+	//test
     private String message;
 
     public String getMessage() {
