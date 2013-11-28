@@ -1,4 +1,4 @@
-package com.sample;
+package com.simulatieTool;
 
 public class Message {
 

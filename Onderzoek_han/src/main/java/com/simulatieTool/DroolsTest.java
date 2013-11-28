@@ -1,4 +1,4 @@
-package com.sample;
+package com.simulatieTool;
 
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseFactory;

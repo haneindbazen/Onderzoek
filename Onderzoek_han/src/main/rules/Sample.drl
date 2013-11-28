@@ -1,6 +1,6 @@
 package com.sample
  
-import com.sample.Message;
+import com.simulatieTool.Message;
  
 rule "Melding van brand"
     when
