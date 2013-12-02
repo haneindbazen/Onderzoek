@@ -1,8 +1,8 @@
 package com.simulatieTool;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -13,8 +13,6 @@ import java.awt.Font;
 import java.awt.TextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.io.IOException;
-import javax.swing.JTextField;
 
 public class MainScreen extends JFrame {
 
@@ -23,6 +21,7 @@ public class MainScreen extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private String tomcatDirectoryPath;
 
 	/**
 	 * Launch the application.
@@ -51,7 +50,7 @@ public class MainScreen extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel panel = new JPanel();
+		final JPanel panel = new JPanel();
 		panel.setBounds(0, 11, 690, 438);
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -62,41 +61,48 @@ public class MainScreen extends JFrame {
 		panel.add(label);
 		
 		Label label_1 = new Label("Tomcat Locatie:");
-		label_1.setBounds(34, 38, 79, 22);
+		label_1.setBounds(34, 38, 95, 22);
 		panel.add(label_1);
 		
 		final TextField textField = new TextField();
-		textField.setBounds(119, 38, 329, 22);
+		textField.setBounds(135, 38, 329, 22);
 		panel.add(textField);
 		
 		Button button = new Button("Browse...");
 		button.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
-				
+				JFileChooser chooser = new JFileChooser(); 
+			    chooser.setCurrentDirectory(new java.io.File("."));
+			    chooser.setDialogTitle("Select Tomcat directory");
+			    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			    //
+			    // disable the "All files" option.
+			    //
+			    chooser.setAcceptAllFileFilterUsed(false);
+			    //    
+			    if (chooser.showOpenDialog(panel) == JFileChooser.APPROVE_OPTION) { 
+			    	tomcatDirectoryPath = chooser.getSelectedFile().toString();
+			    	textField.setText(tomcatDirectoryPath);
+			      }
 			}
 		});
-		button.setBounds(454, 38, 70, 22);
+		button.setBounds(470, 38, 70, 22);
 		panel.add(button);
 		
 		final Button button_1 = new Button("Start");
 		final Button button_2 = new Button("Stop");
-		final String tomcatLocatie = textField.getText();
 		
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					if(Tomcat.Start(tomcatLocatie)) button_2.setEnabled(true);
-				} catch (IOException | InterruptedException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} button_1.setEnabled(false);	
+				if(Tomcat.Start(tomcatDirectoryPath)) button_1.setEnabled(false); button_2.setEnabled(true); 	
 			}
 		});
 		button_1.setBounds(34, 87, 70, 22);
 		panel.add(button_1);
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Tomcat.Stop(tomcatLocatie)) button_1.setEnabled(true); button_2.setEnabled(false); Guvnor.Stop();
+				if(Tomcat.Stop(tomcatDirectoryPath)) button_1.setEnabled(true); button_2.setEnabled(false);
 			}
 		});
 		button_2.setBounds(130, 87, 70, 22);

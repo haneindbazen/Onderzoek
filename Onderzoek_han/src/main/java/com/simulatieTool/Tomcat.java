@@ -9,28 +9,14 @@ public class Tomcat {
 	/**
 	 * Starting Tomcat server
 	 * 
-	 * @param tomcatLocatie
-	 *            tomcat path
+	 * @param tomcatLocatie tomcat path
 	 * @return false or true if startup was successful
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
-	public static boolean Start(String tomcatLocatie) throws IOException, InterruptedException {
-		
-		boolean startSuccessFull = false; 
-		try{
-			String command = tomcatLocatie+"\\bin\\startup.bat";
-			String c = "cmd.exe";
-			tomcatProcess = Runtime.getRuntime().exec(c);
-			tomcatProcess.waitFor();
-			
-			startSuccessFull = true;
-		}
-		catch(Exception e){
-			startSuccessFull = false;
-		}
-		
-		return startSuccessFull;
+	public static boolean Start(String tomcatLocatie){
+		boolean startSuccessFull = false;
+		return startSuccessFull; 
 	}
 
 	/**
@@ -41,7 +27,10 @@ public class Tomcat {
 	 * @return false or true if stop was successful
 	 */
 	public static boolean Stop(String tomcatLocatie) {
-		return false;
+		
+		boolean stopSuccessFull = false; 
+		
+		return stopSuccessFull;
 	}
 
 }
