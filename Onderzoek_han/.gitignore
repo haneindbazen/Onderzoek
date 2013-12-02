@@ -15,7 +15,6 @@
 *.dmg
 *.gz
 *.iso
-*.jar
 *.rar
 *.tar
 *.zip
@@ -43,3 +42,5 @@ Thumbs.db
 .project
 .settings
 .classpath
+/repository
+repository.xml
