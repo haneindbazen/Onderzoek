@@ -1,10 +1,17 @@
 package com.simulatieTool;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class Guvnor {
 
-	public static String Start() {
-		// TODO Auto-generated method stub
-		return null;
+	public static void Start() throws IOException, URISyntaxException {
+		
+		if(Desktop.isDesktopSupported())
+		{
+		  Desktop.getDesktop().browse(new URI("http://localhost:8080/guvnor"));
+		}
 	}
 
 	public static void Stop() {

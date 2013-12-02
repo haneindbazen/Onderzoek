@@ -2,6 +2,7 @@ package com.simulatieTool;
 
 import java.awt.EventQueue;
 
+
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -21,7 +22,7 @@ public class MainScreen extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private String tomcatDirectoryPath;
+	private String tomcatDirectoryPath = "C:\\Users\\ndizigiye\\workspace\\Tomcat";
 
 	/**
 	 * Launch the application.
@@ -95,7 +96,12 @@ public class MainScreen extends JFrame {
 		
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Tomcat.Start(tomcatDirectoryPath)) button_1.setEnabled(false); button_2.setEnabled(true); 	
+				try {
+					if(Tomcat.Start(tomcatDirectoryPath)) button_1.setEnabled(false); Guvnor.Start();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} button_2.setEnabled(true); 	
 			}
 		});
 		button_1.setBounds(34, 87, 70, 22);
