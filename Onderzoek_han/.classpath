@@ -2,7 +2,29 @@
 <classpath>
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/main/rules"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="DROOLS/Drools"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="DROOLS/Drools"/>
+	<classpathentry exported="true" kind="lib" path="libraries/annotations-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/catalina-ant.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/catalina-ha.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/catalina-tribes.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/catalina.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/ecj-4.2.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/el-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jasper-el.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jasper.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/jsp-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/servlet-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/tomcat-coyote.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/tomcat-dbcp.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/tomcat-i18n-es.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/tomcat-i18n-fr.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/tomcat-i18n-ja.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/tomcat-6.0.33-tomcat-juli.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/apache-ant-1.8.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons-discovery-0.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/commons-logging-1.1.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/cargo-core-api.jar"/>
+	<classpathentry exported="true" kind="lib" path="libraries/cargo-core-container-tomcat.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
