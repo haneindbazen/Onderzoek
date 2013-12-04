@@ -8,7 +8,7 @@
 <title>Event Pusher</title>
 </head>
 <body>
-<%ArrayList<String> lines = EventPusher.Push("http:///localhost:9090/home/meldingen.txt");%>
+<%ArrayList<String> lines = EventPusher.Push("meldingen.txt");%>
 <%
 for(String line: lines){%>
 Message: <%=line%>
