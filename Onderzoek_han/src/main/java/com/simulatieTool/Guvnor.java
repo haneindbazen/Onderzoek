@@ -10,7 +10,10 @@ public class Guvnor {
 		
 		if(Desktop.isDesktopSupported())
 		{
+		   //start the guvnor app
 		  Desktop.getDesktop().browse(new URI("http://localhost:9090/guvnor"));
+		  //start also our app
+		  Desktop.getDesktop().browse(new URI("http://localhost:9090/home"));
 		}
 	}
 
