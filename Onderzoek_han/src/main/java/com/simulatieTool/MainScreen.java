@@ -22,7 +22,7 @@ public class MainScreen extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private String tomcatDirectoryPath = "C:\\Users\\ndizigiye\\workspace\\Tomcat";
+	private String guvnorDirectoryPath = "";
 
 	/**
 	 * Launch the application.
@@ -83,8 +83,8 @@ public class MainScreen extends JFrame {
 			    chooser.setAcceptAllFileFilterUsed(false);
 			    //    
 			    if (chooser.showOpenDialog(panel) == JFileChooser.APPROVE_OPTION) { 
-			    	tomcatDirectoryPath = chooser.getSelectedFile().toString();
-			    	textField.setText(tomcatDirectoryPath);
+			    	guvnorDirectoryPath = chooser.getSelectedFile().toString();
+			    	textField.setText(guvnorDirectoryPath);
 			      }
 			}
 		});
@@ -97,7 +97,7 @@ public class MainScreen extends JFrame {
 		button_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if(TomcatStarter.Start(tomcatDirectoryPath)) button_1.setEnabled(false); Guvnor.Start();
+					if(TomcatStarter.Start(guvnorDirectoryPath)) button_1.setEnabled(false); Guvnor.Start();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -108,7 +108,7 @@ public class MainScreen extends JFrame {
 		panel.add(button_1);
 		button_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(TomcatStarter.Stop(tomcatDirectoryPath)) button_1.setEnabled(true); button_2.setEnabled(false);
+				if(TomcatStarter.Stop(guvnorDirectoryPath)) button_1.setEnabled(true); button_2.setEnabled(false);
 			}
 		});
 		button_2.setBounds(130, 87, 70, 22);

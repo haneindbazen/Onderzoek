@@ -10,7 +10,7 @@ public class Guvnor {
 		
 		if(Desktop.isDesktopSupported())
 		{
-		  Desktop.getDesktop().browse(new URI("http://localhost:9090/"));
+		  Desktop.getDesktop().browse(new URI("http://localhost:9090/guvnor"));
 		}
 	}
 

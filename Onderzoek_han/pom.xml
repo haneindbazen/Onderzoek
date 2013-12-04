@@ -4,7 +4,7 @@
   <artifactId>Onderzoek_han</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <properties>
-    <tomcat.version>7.0.34</tomcat.version>
+    <tomcat.version>7.0.30</tomcat.version>
   </properties>
   <dependencies>
     <dependency>
@@ -46,6 +46,12 @@
           <exclude>**/*.java</exclude>
         </excludes>
       </resource>
+      <resource>
+        <directory>src/main/webapps</directory>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </resource>
     </resources>
     <plugins>
       <plugin>
@@ -56,6 +62,11 @@
           <target>1.7</target>
         </configuration>
       </plugin>
+             <plugin>
+          <groupId>org.apache.tomcat.maven</groupId>
+          <artifactId>tomcat6-maven-plugin</artifactId>
+          <version>2.2</version>
+        </plugin>
     </plugins>
   </build>
 </project>

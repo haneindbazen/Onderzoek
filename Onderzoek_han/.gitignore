@@ -43,3 +43,5 @@ Thumbs.db
 /repository
 repository.xml
 /target
+/.niogit
+/.index
