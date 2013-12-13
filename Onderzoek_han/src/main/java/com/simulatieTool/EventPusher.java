@@ -1,6 +1,7 @@
 package com.simulatieTool;
 
 import java.io.BufferedReader;
+import java.io.*;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,7 +14,7 @@ public class EventPusher {
 	
 	public static ArrayList<String> Push(String transcriptPath) throws IOException{
 		
-		FileInputStream fstream = new FileInputStream(transcriptPath);
+		  FileInputStream fstream = new FileInputStream(transcriptPath);
 		  DataInputStream in = new DataInputStream(fstream);
 		  BufferedReader br = new BufferedReader(new InputStreamReader(in));
 		  ArrayList<String> lines = new ArrayList<String>();
@@ -25,5 +26,11 @@ public class EventPusher {
 		return lines;
 	}
 	
+	public static ArrayList<String> Push() throws IOException{
+		
+	
+		  ArrayList<String> lines = new ArrayList<String>();
+	return null;
+	}
 
 }
