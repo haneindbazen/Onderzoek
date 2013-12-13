@@ -45,3 +45,8 @@ repository.xml
 /target
 /.niogit
 /.index
+# Cargo ignore stuff #
+########################
+src/main/webapps/guvnor
+src/main/webapps/.cargo
+tomcat.9090
