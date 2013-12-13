@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="615.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.simulatieTool.MainScreenController">
+  <children>
+    <Pane blendMode="DARKEN" layoutX="0.0" layoutY="1.0" opacity="1.0" prefHeight="536.0" prefWidth="608.0">
+      <children>
+        <Label layoutX="131.0" layoutY="17.0" prefHeight="39.90234375" prefWidth="310.0" text="Event Driven Simulator" textAlignment="LEFT" textFill="#ff9533">
+          <font>
+            <Font size="30.0" />
+          </font>
+        </Label>
+        <Label layoutX="47.0" layoutY="66.0" prefWidth="73.0" text="Start Guvnor" underline="true" />
+        <Button fx:id="startGuvnor" layoutX="136.0" layoutY="183.0" minHeight="29.6015625" mnemonicParsing="false" onMousePressed="#StartGuvnor" prefHeight="34.6015625" prefWidth="97.0" text="Start">
+          <font>
+            <Font name="System Bold" size="20.0" fx:id="x1" />
+          </font>
+        </Button>
+        <Label layoutX="52.0" layoutY="261.0" text="Start Simulator" underline="true" />
+        <Button fx:id="startSimulator" font="$x1" layoutX="39.0" layoutY="308.0" mnemonicParsing="false" onMousePressed="#StartSimulator" prefWidth="97.0" text="Start" />
+        <Separator layoutX="39.0" layoutY="245.0" prefHeight="15.9609375" prefWidth="201.0" />
+        <Label layoutX="39.0" layoutY="139.0" text="Guvnor Location" />
+        <TextField fx:id="guvnorLocation" layoutX="136.0" layoutY="139.0" prefWidth="280.0" />
+        <Label layoutX="39.0" layoutY="109.0" text="Tomcat Location" />
+        <TextField fx:id="tomcatLocation" layoutX="136.0" layoutY="104.0" prefWidth="280.0" />
+        <Button fx:id="browseTomcat" layoutX="428.0" layoutY="105.0" mnemonicParsing="false" onMousePressed="#BrowseTomcat" prefWidth="73.0" text="Browse..." />
+        <Button fx:id="browseGuvnor" layoutX="428.0" layoutY="139.0" mnemonicParsing="false" onMousePressed="#BrowseGuvnor" prefWidth="73.0" text="Browse..." />
+        <ImageView fx:id="waitImage" fitHeight="9.257810577196235" fitWidth="78.99998474121094" layoutX="258.0" layoutY="196.0" pickOnBounds="true" preserveRatio="true" visible="false">
+          <image>
+            <Image url="@images/wait.gif" />
+          </image>
+        </ImageView>
+        <Label fx:id="waitStartText" layoutX="349.0" layoutY="193.0" text="Starting guvnor please wait..." visible="false">
+          <font>
+            <Font name="System Italic" size="12.0" fx:id="x2" />
+          </font>
+        </Label>
+        <Label fx:id="waitStopText" font="$x2" layoutX="349.0" layoutY="193.0" text="Stopping guvnor please wait..." visible="false" />
+        <Button id="startGuvnor" fx:id="stopGuvnor" font="$x1" layoutX="23.0" layoutY="184.0" minHeight="29.6015625" mnemonicParsing="false" onMousePressed="#StopGuvnor" prefHeight="34.6015625" prefWidth="97.0" text="Stop" />
+      </children>
+    </Pane>
+  </children>
+</AnchorPane>
