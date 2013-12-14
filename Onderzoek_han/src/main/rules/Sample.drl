@@ -1,17 +1,10 @@
 package com.sample
  
-import com.simulatieTool.Message;
+import com.simulatieTool.Webapp.EventPusher;
  
-rule "Melding van brand"
+rule "Melding"
     when
-    	m: Message (message.toLowerCase().contains("brand"), myMessage : message);
+    	event: EventPusher (myMessage : message);
     then
-        System.out.println( "Brand: " + myMessage );
-end
-
-rule "Melding van ongeluk"
-    when
-        m : Message(message.toLowerCase().contains("ongeluk"), myMessage : message );
-    then
-        System.out.println( "Ongeluk: " + myMessage );
+        System.out.println(myMessage );
 end
