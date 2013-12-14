@@ -4,6 +4,7 @@ import java.io.File;
 
 import javax.servlet.ServletException;
 
+import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
 
@@ -25,9 +26,12 @@ public class TomcatStarter {
 		boolean startSuccessFull = false;
 
         tomcat.setPort(9090);
-        
+        File base = new File(System.getProperty("java.io.tmpdir"));
+        Context rootCtx = tomcat.addContext("", base.getAbsolutePath());
         try {
         	tomcat.addWebapp("/simulator", new File(webappDirLocation).getAbsolutePath());
+        	Tomcat.addServlet(rootCtx, "eventPusher", new EventPusher());
+        	rootCtx.addServletMapping("/pusher", "eventPusher");
 			tomcat.start();
 			startSuccessFull = true;
 		} catch (LifecycleException | ServletException e) {

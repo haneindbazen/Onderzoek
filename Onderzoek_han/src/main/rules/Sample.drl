@@ -1,10 +1,10 @@
 package com.sample
  
-import com.simulatieTool.Webapp.EventPusher;
+import com.simulatieTool.Webapp.Event;
  
 rule "Melding"
     when
-    	event: EventPusher (myMessage : message);
+    	event: Event (myMessage : message);
     then
         System.out.println(myMessage );
 end
