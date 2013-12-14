@@ -29,7 +29,7 @@ public class Guvnor {
 	}
 
 	public static void Start() {
-		war = new WAR("C:/Users/ndizigiye/workspace/guvnor5.war");
+		war = new WAR("C:/Users/ndizigiye/workspace/guvnor.war");
 		tomcatLocation = "C:/Users/ndizigiye/workspace/Tomcat7";
 		configuration.setProperty(ServletPropertySet.PORT, "9091");
 		configuration.addDeployable(war);

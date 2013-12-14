@@ -43,9 +43,11 @@ public class MainScreenController {
 		stopGuvnor.setDisable(true);
 		waitStopText.setVisible(true);
 		stopGuvnor.setDisable(true);
+		waitImage.setVisible(true);
 		Guvnor.Stop();
 		waitStopText.setVisible(false);
 		waitImage.setVisible(false);
+		startGuvnor.setDisable(false);
 	}
 	public void StopGuvnor(){
 		Thread t = new Thread() {
@@ -64,6 +66,7 @@ public class MainScreenController {
 			Guvnor.Start();
 			waitStartText.setVisible(false);
 			waitImage.setVisible(false);
+			stopGuvnor.setVisible(true);
 			Guvnor.Open();
 		} catch (IOException | URISyntaxException e) {
 			startGuvnor.setDisable(false);
@@ -83,7 +86,15 @@ public class MainScreenController {
 	 * Start the main simulator app and open it in the browser
 	 */
 	public void StartSimulator() {
-
+		Thread t = new Thread() {
+		    public void run() {
+		    	StartSimulatorInternal();
+		    }
+		};
+		t.start();
+	}
+	
+	public void StartSimulatorInternal(){
 		startSimulator.setDisable(true);
 		if (TomcatStarter.Start()) {
 			try {
