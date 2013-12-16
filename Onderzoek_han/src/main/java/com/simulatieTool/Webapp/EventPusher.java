@@ -5,62 +5,75 @@ import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.util.ArrayList;
 
-import javax.servlet.annotation.WebServlet;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.catalina.websocket.MessageInbound;
 import org.apache.catalina.websocket.StreamInbound;
 import org.apache.catalina.websocket.WebSocketServlet;
-import org.apache.catalina.websocket.WsOutbound;
 
-public class EventPusher extends WebSocketServlet{
-    private static final long serialVersionUID = 1L;
-    private static ArrayList<MyMessageInbound> mmiList = new ArrayList<MyMessageInbound>();
- 
-    public StreamInbound createWebSocketInbound(String protocol){
-        return new MyMessageInbound();
-    }
- 
-    private class MyMessageInbound extends MessageInbound{
-        WsOutbound myoutbound;
- 
-        @Override
-        public void onOpen(WsOutbound outbound){
-            try {
-                System.out.println("Open Client.");
-                this.myoutbound = outbound;
-                mmiList.add(this);
-                outbound.writeTextMessage(CharBuffer.wrap("Hello!"));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
- 
-        @Override
-        public void onClose(int status){
-            System.out.println("Close Client.");
-            mmiList.remove(this);
-        }
- 
-        @Override
-        public void onTextMessage(CharBuffer cb) throws IOException{
-            System.out.println("Accept Message : "+ cb);
-            for(MyMessageInbound mmib: mmiList){
-                CharBuffer buffer = CharBuffer.wrap(cb);
-                mmib.myoutbound.writeTextMessage(buffer);
-                mmib.myoutbound.flush();
-            }
-        }
- 
-        @Override
-        public void onBinaryMessage(ByteBuffer bb) throws IOException{
-        }
-    }
+public class EventPusher extends WebSocketServlet {
+
+	private static final long serialVersionUID = 1L;
+	private volatile int byteBufSize;
+	private volatile int charBufSize;
 
 	@Override
-	protected StreamInbound createWebSocketInbound(String arg0,
-			HttpServletRequest arg1) {
-		// TODO Auto-generated method stub
-		return null;
+	public void init() throws ServletException {
+		super.init();
+		byteBufSize = getInitParameterIntValue("byteBufferMaxSize", 2097152);
+		charBufSize = getInitParameterIntValue("charBufferMaxSize", 2097152);
+	}
+
+	public int getInitParameterIntValue(String name, int defaultValue) {
+		String val = this.getInitParameter(name);
+		int result;
+		if (null != val) {
+			try {
+				result = Integer.parseInt(val);
+			} catch (Exception x) {
+				result = defaultValue;
+			}
+		} else {
+			result = defaultValue;
+		}
+
+		return result;
+	}
+
+	@Override
+	protected StreamInbound createWebSocketInbound(String subProtocol,
+			HttpServletRequest request) {
+		return new EchoMessageInbound(byteBufSize, charBufSize);
+	}
+
+	private static final class EchoMessageInbound extends MessageInbound {
+
+		public EchoMessageInbound(int byteBufferMaxSize, int charBufferMaxSize) {
+			super();
+			setByteBufferMaxSize(byteBufferMaxSize);
+			setCharBufferMaxSize(charBufferMaxSize);
+		}
+
+		@Override
+		protected void onBinaryMessage(ByteBuffer message) throws IOException {
+			getWsOutbound().writeBinaryMessage(message);
+		}
+
+		@Override
+		protected void onTextMessage(CharBuffer message) throws IOException {
+			System.out.println("client says: "+message.toString());
+			ArrayList<String> lines = TranscriptReader.GetLines("C:/Users/ndizigiye/git/Onderzoek_han/Onderzoek_han/target/classes/com/simulatieTool/Webapp/meldingen.txt");
+			for (String line:lines) {
+				System.out.println(line);
+				getWsOutbound().writeTextMessage(CharBuffer.wrap(line));
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }
