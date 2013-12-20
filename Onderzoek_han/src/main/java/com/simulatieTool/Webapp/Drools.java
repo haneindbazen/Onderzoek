@@ -85,7 +85,7 @@ public class Drools {
         KnowledgeAgentConfiguration kaconf = KnowledgeAgentFactory.newKnowledgeAgentConfiguration();
         kaconf.setProperty( "drools.agent.scanDirectories", "false" );
         KnowledgeAgent kagent = KnowledgeAgentFactory.newKnowledgeAgent( "test agent", kaconf );
-        kagent.applyChangeSet( ResourceFactory.newClassPathResource(Drools.class.getResource("/guvnor.xml").getPath()));
+        kagent.applyChangeSet( ResourceFactory.newClassPathResource("guvnor.xml"));
         return kagent.getKnowledgeBase();
     }
     
