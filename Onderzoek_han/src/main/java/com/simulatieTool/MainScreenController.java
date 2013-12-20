@@ -27,6 +27,7 @@ public class MainScreenController {
 	@FXML private Button browseGuvnor;
 	@FXML private TextField tomcatLocation;
 	@FXML private TextField guvnorLocation;
+	
 	/**
 	 * Start the guvnor app and open it in the browser
 	 */
@@ -110,3 +111,5 @@ public class MainScreenController {
 		}
 	}
 }
+
+

@@ -7,7 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry including="**/*.java" kind="src" path="src/main/rules"/>
-	<classpathentry kind="src" path="src/main/webapps"/>
 	<classpathentry exported="true" kind="con" path="DROOLS/Drools"/>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>

@@ -2,9 +2,32 @@ package com.sample
  
 import com.simulatieTool.Webapp.Event;
  
-rule "Melding"
-    when
-    	event: Event (myMessage : message);
-    then
-        System.out.println(myMessage );
+rule "Rule"
+ dialect "mvel"
+ 
+ when event : Event( message contains "zesenveertig") or event : Event( message contains "zesennegentig") or event : Event( message contains "zesennegentig")
+ or event : Event( message contains "veertig")
+ 	  
+ 
+then
+	event.PushEventToBrowser( event, "nummer" );
+end
+
+rule "Rulea"
+ dialect "mvel"
+ 
+ when event : Event( message contains "neergeschoten") or event : Event( message contains "vuurwapen")
+ 	  
+ 
+then
+	event.PushEventToBrowser( event, "schiet-partij" );
+end
+
+rule "Ruleb"
+ dialect "mvel"
+ 
+ when event : Event( message contains "geld") or event : Event( message contains "vuurwapen")
+ 
+then
+	event.PushEventToBrowser( event, "geld overval" );
 end

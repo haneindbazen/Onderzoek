@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.web.*?>
 
 <AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="615.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.simulatieTool.MainScreenController">
   <children>
@@ -44,6 +45,7 @@
         </Label>
         <Label fx:id="waitStopText" font="$x2" layoutX="349.0" layoutY="193.0" text="Stopping guvnor please wait..." visible="false" />
         <Button id="startGuvnor" fx:id="stopGuvnor" font="$x1" layoutX="23.0" layoutY="184.0" minHeight="29.6015625" mnemonicParsing="false" onMousePressed="#StopGuvnor" prefHeight="34.6015625" prefWidth="97.0" text="Stop" />
+        <WebView fx:id="webVieuw" layoutX="140.0" layoutY="268.0" prefHeight="221.0" prefWidth="440.0" />
       </children>
     </Pane>
   </children>

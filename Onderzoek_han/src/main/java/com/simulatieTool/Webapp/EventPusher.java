@@ -13,7 +13,9 @@ import org.apache.catalina.websocket.StreamInbound;
 import org.apache.catalina.websocket.WebSocketServlet;
 
 public class EventPusher extends WebSocketServlet {
-
+	
+	public static ArrayList<EchoMessageInbound> clients = new ArrayList<EchoMessageInbound>();
+	
 	private static final long serialVersionUID = 1L;
 	private volatile int byteBufSize;
 	private volatile int charBufSize;
@@ -42,12 +44,13 @@ public class EventPusher extends WebSocketServlet {
 	}
 
 	@Override
-	protected StreamInbound createWebSocketInbound(String subProtocol,
-			HttpServletRequest request) {
-		return new EchoMessageInbound(byteBufSize, charBufSize);
+	protected StreamInbound createWebSocketInbound(String subProtocol,HttpServletRequest request) {
+		EchoMessageInbound mi = new EchoMessageInbound(byteBufSize, charBufSize);
+		clients.add(mi);
+		return mi;
 	}
 
-	private static final class EchoMessageInbound extends MessageInbound {
+	public static class EchoMessageInbound extends MessageInbound {
 
 		public EchoMessageInbound(int byteBufferMaxSize, int charBufferMaxSize) {
 			super();
@@ -58,15 +61,29 @@ public class EventPusher extends WebSocketServlet {
 		@Override
 		protected void onBinaryMessage(ByteBuffer message) throws IOException {
 			getWsOutbound().writeBinaryMessage(message);
+			
+			
+		}
+		
+		public void senMessage(String message) throws IOException{
+			getWsOutbound().writeTextMessage(CharBuffer.wrap(message));
 		}
 
 		@Override
-		protected void onTextMessage(CharBuffer message) throws IOException {
+		protected void onTextMessage(CharBuffer msg) throws IOException {
+			String message = msg.toString();
 			System.out.println("client says: "+message.toString());
-			ArrayList<String> lines = TranscriptReader.GetLines("C:/Users/ndizigiye/git/Onderzoek_han/Onderzoek_han/target/classes/com/simulatieTool/Webapp/meldingen.txt");
+			try {
+				Drools.Init(message.split("#")[1]);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
+			ArrayList<String> lines = TranscriptReader.GetLines(getClass().getResource("meldingen.txt").getPath());
 			for (String line:lines) {
 				System.out.println(line);
-				getWsOutbound().writeTextMessage(CharBuffer.wrap(line));
+				Drools.FireRules(new Event(line));
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
@@ -74,6 +91,7 @@ public class EventPusher extends WebSocketServlet {
 					e.printStackTrace();
 				}
 			}
+			Drools.Close();
 		}
 	}
 }

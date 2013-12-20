@@ -10,12 +10,10 @@ public class Simulator {
 	/**
 	 * Open the simulator app in the browser
 	 */
-public static void Open() throws IOException, URISyntaxException {
-		
-		if(Desktop.isDesktopSupported())
-		{
-		   //start the simulator app
-		  Desktop.getDesktop().browse(new URI("http://localhost:9090/simulator"));
+	public static void Open() throws IOException, URISyntaxException {
+		if (Desktop.isDesktopSupported()) {
+			Desktop.getDesktop().browse(new
+			URI("http://localhost:9090/simulator"));
 		}
 	}
 }

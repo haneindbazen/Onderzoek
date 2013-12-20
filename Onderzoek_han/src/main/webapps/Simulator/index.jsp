@@ -7,34 +7,19 @@
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
 <title>Apache Tomcat WebSocket Examples: Echo</title>
 <style>
-button {
-	margin-left: 400px;
-	margin-right: auto;
-	margin-top: 30px;
+#gunvorLink{
+margin: 10px 0px 10px 30px;
 }
-
-#board {
-	width: 400px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 10%;
-	padding: 20px;
-	background: black;
-	color: #fff;
-	font-size: 21px;
-	font-weight: bold;
-	line-height: 1.3em;
-	border: 2px dashed #fff;
-	border-radius: 10px;
-	box-shadow: 0 0 0 4px #ff0030, 2px 1px 6px 4px rgba(10, 10, 0, 0.5);
-	text-shadow: -1px -1px #aa3030;
-	font-weight: normal;
-}
+.pure-button-small {
+            font-size: 85%;
+        }
 </style>
 <script type="text/javascript">
 	var ws = null;
+	//var interfaceDir = "C:\Users\ndizigiye\Pictures\simulator\";
 
 	if ('WebSocket' in window) {
 		ws = new WebSocket("ws://localhost:9090/pusher");
@@ -47,7 +32,7 @@ button {
 	ws.onopen = function() {
 	};
 	ws.onmessage = function(event) {
-		$("#board").html(event.data);
+		$("#received").val(event.data);
 		console.log(event.data);
 	};
 	ws.onclose = function() {
@@ -60,14 +45,15 @@ button {
 		}
 	}
 	$(document).ready(function() {
-		$("#start").click(function() {
-			ws.send("start simulator");
+		$(".pure-button").click(function() {
+			ws.send("start#"+$("#gunvorLink").val());
 		});
 	});
 </script>
 </head>
 <body>
-	<div id="board">Hier komt de melding !!!!</div>
-	<button type="button" id="start">Start Simulator</button>
+<input id="gunvorLink" class="pure-input-1-2" type="text" placeholder="gunvor rules link">
+<button class="pure-button">Start</button>
+<input id="received" class="pure-input-1-2" size="60"type="text" placeholder="message received">
 </body>
 </html>
