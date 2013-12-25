@@ -29,8 +29,8 @@ public class Guvnor {
 	}
 
 	public static void Start() {
-		war = new WAR("C:/Users/ndizigiye/workspace/guvnor.war");
-		tomcatLocation = "C:/Users/ndizigiye/workspace/Tomcat7";
+		war = new WAR(Guvnor.class.getResource("/guvnor5.war").getPath());
+		tomcatLocation = Guvnor.class.getResource("/tomcat7").getPath();
 		configuration.setProperty(ServletPropertySet.PORT, "9092");
 		configuration.addDeployable(war);
 		container.setHome(tomcatLocation);
