@@ -29,7 +29,7 @@ public class Guvnor {
 	}
 
 	public static void Start() {
-		war = new WAR(Guvnor.class.getResource("/guvnor5.war").getPath());
+		war = new WAR(Guvnor.class.getResource("/guvnor.war").getPath());
 		tomcatLocation = Guvnor.class.getResource("/tomcat7").getPath();
 		configuration.setProperty(ServletPropertySet.PORT, "9092");
 		configuration.addDeployable(war);

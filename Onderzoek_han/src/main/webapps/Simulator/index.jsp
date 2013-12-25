@@ -10,6 +10,12 @@
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
 <title>Apache Tomcat WebSocket Examples: Echo</title>
 <style>
+#iframe{
+border :0;
+width:99%;
+height:100%;
+}
+
 #gunvorLink{
 margin: 10px 0px 10px 30px;
 }
@@ -54,6 +60,7 @@ margin: 10px 0px 10px 30px;
 <body>
 <input id="gunvorLink" class="pure-input-1-2" type="text" placeholder="gunvor rules link">
 <button class="pure-button">Start</button>
-<input id="received" class="pure-input-1-2" size="60"type="text" placeholder="message received">
+<input id="received" class="pure-input-1-2" size="60"type="text" placeholder="message received"></br>
+<iframe id="iframe" src="/simulator/websocket.jsp"></iframe>
 </body>
 </html>

@@ -80,7 +80,7 @@ public class EventPusher extends WebSocketServlet {
 				e1.printStackTrace();
 			}
 			
-			ArrayList<String> lines = TranscriptReader.GetLines(getClass().getResource("meldingen.txt").getPath());
+			ArrayList<String> lines = TranscriptReader.GetLines(getClass().getResource("/meldingen.txt").getPath());
 			for (String line:lines) {
 				System.out.println(line);
 				Drools.FireRules(new Event(line));

@@ -28,4 +28,14 @@ public class Event {
 		}
 
 	}
+	
+	public boolean contains(String a,String b, String c){
+		
+		boolean contains = false;
+		if(message.contains(a) || message.contains(b) || message.contains(c)){
+			contains = true;
+		}
+		return contains;
+	}
+	
 }
