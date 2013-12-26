@@ -25,7 +25,42 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
-	<classpathentry kind="con" path="at.bestsolution.efxclipse.tooling.jdt.core.JAVAFX_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
+	<classpathentry exported="true" kind="con" path="at.bestsolution.efxclipse.tooling.jdt.core.JAVAFX_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/com.justinmind.model_5.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/com.justinmind.prototyper.api_5.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/com.justinmind.util_5.5.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.ant.source_1.8.3.v201301120609 - Copy.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.ant.source_1.8.3.v201301120609.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.commons.codec.source_1.3.0.v201101211617.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.commons.codec_1.3.0.v201101211617.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.commons.httpclient.source_3.1.0.v201012070820.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.commons.httpclient_3.1.0.v201012070820.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.commons.logging.source_1.0.4.v201101211617.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.commons.logging_1.0.4.v201101211617.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.felix.gogo.command.source_0.8.0.v201108120515.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.felix.gogo.command_0.8.0.v201108120515.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.felix.gogo.runtime.source_0.8.0.v201108120515.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.felix.gogo.runtime_0.8.0.v201108120515.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.felix.gogo.shell.source_0.8.0.v201110170705 - Copy.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.felix.gogo.shell.source_0.8.0.v201110170705.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.felix.gogo.shell_0.8.0.v201110170705 - Copy.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.felix.gogo.shell_0.8.0.v201110170705.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.jasper.glassfish.source_2.2.2.v201205150955 - Copy.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.jasper.glassfish.source_2.2.2.v201205150955.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.jasper.glassfish_2.2.2.v201205150955 - Copy.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.jasper.glassfish_2.2.2.v201205150955.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.lucene.analysis.source_2.9.1.v201101211721 - Copy.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.lucene.analysis.source_2.9.1.v201101211721.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.lucene.analysis_2.9.1.v201101211721 - Copy.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.lucene.analysis_2.9.1.v201101211721.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.lucene.core.source_2.9.1.v201101211721 - Copy.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.lucene.core.source_2.9.1.v201101211721.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.lucene.core_2.9.1.v201101211721 - Copy.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.lucene.core_2.9.1.v201101211721.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.lucene.source_2.9.1.v201101211721 - Copy.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.lucene.source_2.9.1.v201101211721.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.lucene_2.9.1.v201101211721 - Copy.jar"/>
+	<classpathentry exported="true" kind="lib" path="C:/Users/ndizigiye/Pictures/justinmind/API/org.apache.lucene_2.9.1.v201101211721.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
