@@ -21,16 +21,15 @@ public class Test {
 
 	public static void main(String[] args) throws IOException {
 
-		File prototypesDir = new File("C:/Users/ndizigiye/Downloads/Prototype1");
-		System.out.println(Test.class.getResource("/interfaces").getPath());
+		File prototypesDir = new File("C:/Users/ndizigiye/Pictures/justinmind/Prototype1");
 		System.out.println(prototypesDir.getName());
 		try {
-			homePrototypesDir = new File(Test.class.getResource("/interfaces")
+			homePrototypesDir = new File(Test.class.getResource("/Simulator/interfaces")
 					.getPath() + "/" + prototypesDir.getName());
 			FileUtils.cleanDirectory(homePrototypesDir);
 		}
 
-		catch (NullPointerException e) {
+		catch (NullPointerException | IllegalArgumentException e) {
 			homePrototypesDir.mkdir();
 		}
 

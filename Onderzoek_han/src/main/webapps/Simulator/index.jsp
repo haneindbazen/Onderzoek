@@ -39,7 +39,10 @@ margin: 10px 0px 10px 30px;
 	};
 	ws.onmessage = function(event) {
 		$("#received").val(event.data);
+		var melding = event.data;
+		var screenName = melding.split("#")[1];
 		console.log(event.data);
+		$('#iframe').attr('src', 'http://google.com');
 	};
 	ws.onclose = function() {
 	};
