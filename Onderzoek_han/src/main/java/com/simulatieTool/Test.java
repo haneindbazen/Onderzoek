@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
@@ -50,6 +51,16 @@ public class Test {
 
 		for (File screen : screenList) {
 			TagNode node = cleaner.clean(screen);
+			TagNode[] cssLinks = node.getElementsByAttValue("rel", "stylesheet", true, true);
+			
+			for (TagNode cssLink: cssLinks){
+				String link = cssLink.getAttributeByName("href");
+				link = link.replace("./", "/simulator/interfaces/Prototype1/");
+				cssLink.setAttribute("href", link);
+			}
+			
+			TagNode alignmentBox = node.findElementByAttValue("id","alignmentBox", true, true);
+			alignmentBox.removeFromTree();
 			String html = cleaner.getInnerHtml(node);
 			System.out.println("----------------");
 			TagNode screenNode = node.findElementByAttValue("class",
