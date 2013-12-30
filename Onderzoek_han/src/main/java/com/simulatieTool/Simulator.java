@@ -13,7 +13,7 @@ public class Simulator {
 	public static void Open() throws IOException, URISyntaxException {
 		if (Desktop.isDesktopSupported()) {
 			Desktop.getDesktop().browse(new
-			URI("http://localhost:9090/simulator"));
+			URI("http://localhost:9091/simulator"));
 		}
 	}
 }

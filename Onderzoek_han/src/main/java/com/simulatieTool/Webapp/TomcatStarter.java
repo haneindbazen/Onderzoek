@@ -15,7 +15,7 @@ import org.apache.catalina.startup.Tomcat;
  */
 public class TomcatStarter {
 	
-	static String webappDirLocation = "src/main/webapps/Simulator";
+	static String webappDirLocation = TomcatStarter.class.getResource("/Simulator").getPath();
     static Tomcat tomcat = new Tomcat();
 
 	/**
@@ -25,7 +25,7 @@ public class TomcatStarter {
 	public static boolean Start(){
 		boolean startSuccessFull = false;
 
-        tomcat.setPort(9090);
+        tomcat.setPort(9091);
         File base = new File(System.getProperty("java.io.tmpdir"));
         Context rootCtx = tomcat.addContext("", base.getAbsolutePath());
         try {

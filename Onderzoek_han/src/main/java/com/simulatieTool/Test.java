@@ -55,6 +55,7 @@ public class Test {
 			TagNode screenNode = node.findElementByAttValue("class",
 					"screen firer ie-background commentable", true, true);
 			String screenName = screenNode.getAttributeByName("name");
+			screenName = screenName.toLowerCase();
 			File newDest = new File(homePrototypesDir.getPath()
 					+ "/review/screens/" + screenName + ".html");
 

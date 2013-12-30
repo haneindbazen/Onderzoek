@@ -28,9 +28,9 @@ margin: 10px 0px 10px 30px;
 	//var interfaceDir = "C:\Users\ndizigiye\Pictures\simulator\";
 
 	if ('WebSocket' in window) {
-		ws = new WebSocket("ws://localhost:9090/pusher");
+		ws = new WebSocket("ws://localhost:9091/pusher");
 	} else if ('MozWebSocket' in window) {
-		ws = new MozWebSocket("ws://localhost:9090/pusher");
+		ws = new MozWebSocket("ws://localhost:9091/pusher");
 	} else {
 		alert('WebSocket is not supported by this browser.');
 		return;
@@ -41,8 +41,10 @@ margin: 10px 0px 10px 30px;
 		$("#received").val(event.data);
 		var melding = event.data;
 		var screenName = melding.split("#")[1];
+		var screenSrc = '/simulator/interfaces/Prototype1/review/screens/'+screenName+'.html';
 		console.log(event.data);
-		$('#iframe').attr('src', 'http://google.com');
+		$('#iframe').attr('src', screenSrc);
+		$('#iframe').
 	};
 	ws.onclose = function() {
 	};
