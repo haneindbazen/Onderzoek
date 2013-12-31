@@ -5,7 +5,7 @@
 	<artifactId>Onderzoek_han</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
-		<tomcat.version>7.0.34</tomcat.version>
+		<tomcat.version>7.0.47</tomcat.version>
 		<jettyVersion>7.2.0.v20101020</jettyVersion>
 	</properties>
 	<dependencies>
