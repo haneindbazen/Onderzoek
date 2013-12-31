@@ -6,7 +6,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
 		<tomcat.version>7.0.47</tomcat.version>
-		<jettyVersion>7.2.0.v20101020</jettyVersion>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -18,16 +17,6 @@
 			<groupId>net.sourceforge.htmlcleaner</groupId>
 			<artifactId>htmlcleaner</artifactId>
 			<version>2.2</version>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.cargo</groupId>
-			<artifactId>cargo-core-api-container</artifactId>
-			<version>1.4.5</version>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.cargo</groupId>
-			<artifactId>cargo-core-container-tomcat</artifactId>
-			<version>1.4.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
@@ -61,8 +50,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.5.2</version>
+			<version>1.7.5</version>
 		</dependency>
 	</dependencies>
 	<build>
