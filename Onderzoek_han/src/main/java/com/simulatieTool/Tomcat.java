@@ -13,13 +13,17 @@ public class Tomcat {
 	public static void main(String[] args) throws Exception {
 		synchronized(tomcatRun){
 			runTomcat();
+			if(Desktop.isDesktopSupported())
+			{
+			  Desktop.getDesktop().browse(new URI("http://localhost:8080/guvnor"));
+			}
 			tomcatRun.wait();
 		}
 	}
 
 	public static void runTomcat() {
 		bootstrap = new Bootstrap();
-		bootstrap.setCatalinaHome(Tomcat.class.getResource("/Tomcat7").getPath());
+		bootstrap.setCatalinaHome("C:/Users/ndizigiye/workspace/Tomcat7");//Tomcat.class.getResource("/Tomcat7").getPath());
 		try {
 			bootstrap.start();
 			

@@ -28,8 +28,6 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
 	<classpathentry exported="true" kind="con" path="at.bestsolution.efxclipse.tooling.jdt.core.JAVAFX_CONTAINER"/>
-	<classpathentry exported="true" kind="lib" path="src/main/lib/bootstrap.jar"/>
-	<classpathentry exported="true" kind="lib" path="src/main/lib/commons-daemon.jar"/>
 	<classpathentry exported="true" kind="lib" path="src/main/lib/catalina-ha.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
