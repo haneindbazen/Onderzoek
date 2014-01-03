@@ -1,6 +1,6 @@
 package com.sample
  
-import com.simulatieTool.Webapp.Event;
+import com.han.simulator.utils.Event;
  
 rule "Rule"
  dialect "mvel"
