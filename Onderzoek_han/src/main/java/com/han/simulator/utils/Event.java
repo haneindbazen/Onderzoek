@@ -1,10 +1,13 @@
 package com.han.simulator.utils;
 
 import java.io.IOException;
-import java.nio.CharBuffer;
-
 import com.han.simulator.utils.EventPusher.EchoMessageInbound;
 
+/**
+* The Model for creating Rules in Guvnor
+* @author Armand Ndizigiye
+* @version 0.1
+*/
 public class Event {
 
 	public String message;
@@ -20,22 +23,19 @@ public class Event {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	
+	/**
+	 * Push the event to the Browser
+	 * @param e - the occured event
+	 * @param interfaceName - the name of the interface for this event
+	 * @throws IOException
+	 */
 
 	public void PushEventToBrowser(Event e, String interfaceName)
 			throws IOException {
 		for (EchoMessageInbound mi : EventPusher.clients) {
-			mi.senMessage(e.getMessage()+"#"+interfaceName);
+			mi.sendMessage(e.getMessage()+"#"+interfaceName);
 		}
 
 	}
-	
-	public boolean contains(String a,String b, String c){
-		
-		boolean contains = false;
-		if(message.contains(a) || message.contains(b) || message.contains(c)){
-			contains = true;
-		}
-		return contains;
-	}
-	
 }

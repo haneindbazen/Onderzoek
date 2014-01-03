@@ -12,7 +12,12 @@ import org.htmlcleaner.CleanerProperties;
 import org.htmlcleaner.SimpleHtmlSerializer;
 import org.htmlcleaner.TagNode;
 
-public class Test {
+/**
+* This class handles generated Htmls from JustinMind 
+* @author Armand Ndizigiye
+* @version 0.1
+*/
+public class JustInMind {
 
 	public static File homePrototypesDir;
 	public static org.htmlcleaner.HtmlCleaner cleaner = new org.htmlcleaner.HtmlCleaner();
@@ -25,7 +30,7 @@ public class Test {
 		File prototypesDir = new File("C:/Users/ndizigiye/Pictures/justinmind/Prototype1");
 		System.out.println(prototypesDir.getName());
 		try {
-			homePrototypesDir = new File(Test.class.getResource("/Simulator/interfaces")
+			homePrototypesDir = new File(JustInMind.class.getResource("/Simulator/interfaces")
 					.getPath() + "/" + prototypesDir.getName());
 			FileUtils.cleanDirectory(homePrototypesDir);
 		}

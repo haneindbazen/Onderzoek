@@ -1,46 +1,44 @@
 package com.han.simulator.servers;
-import java.awt.Desktop;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
-import org.codehaus.cargo.container.InstalledLocalContainer;
-import org.codehaus.cargo.container.configuration.LocalConfiguration;
-import org.codehaus.cargo.container.deployable.Deployable;
-import org.codehaus.cargo.container.deployable.WAR;
-import org.codehaus.cargo.container.property.ServletPropertySet;
-import org.codehaus.cargo.container.tomcat.Tomcat7xInstalledLocalContainer;
-import org.codehaus.cargo.container.tomcat.Tomcat7xStandaloneLocalConfiguration;
+import java.awt.Desktop;
+import java.net.URI;
+
+import org.apache.catalina.startup.Bootstrap;
 
 public class Guvnor {
 
-	private static Deployable war;
-	private static LocalConfiguration configuration = new Tomcat7xStandaloneLocalConfiguration("src/main/webapps/guvnor");
-	private static InstalledLocalContainer container =  new Tomcat7xInstalledLocalContainer(configuration);
-	private static String tomcatLocation;
-	
-	public static void Open() throws IOException, URISyntaxException {
-		
-		if(Desktop.isDesktopSupported())
-		{
-		   //start the guvnor app
-		  Desktop.getDesktop().browse(new URI("http://localhost:9091/guvnor"));
+	static Bootstrap bootstrap = new Bootstrap();
+	static Thread tomcatRun = new Thread();
+
+	public static void main(String[] args) throws Exception {
+		synchronized(tomcatRun){
+			runTomcat();
+			if(Desktop.isDesktopSupported())
+			{
+			  Desktop.getDesktop().browse(new URI("http://localhost:8080/guvnor"));
+			}
+			tomcatRun.wait();
 		}
 	}
 
-	public static void Start() {
-		war = new WAR(Guvnor.class.getResource("/guvnor.war").getPath());
-		tomcatLocation = Guvnor.class.getResource("/tomcat7").getPath();
-		configuration.setProperty(ServletPropertySet.PORT, "9092");
-		configuration.addDeployable(war);
-		container.setHome(tomcatLocation);
-		container.start();
-		System.out.println("guvnor started");
+	public static void runTomcat() {
+		bootstrap = new Bootstrap();
+		bootstrap.setCatalinaHome("C:/Users/ndizigiye/workspace/Tomcat7");//Tomcat.class.getResource("/Tomcat7").getPath());
+		try {
+			bootstrap.start();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("Failed Tomcat");
+		}
 	}
-	
-	public static void Stop() {
-		container.stop();
-		
+
+	public static void stopTomcat() {
+		try {
+			bootstrap.stop();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

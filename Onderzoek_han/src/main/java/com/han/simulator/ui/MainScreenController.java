@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 
 import com.han.simulator.servers.Guvnor;
 import com.han.simulator.servers.Simulator;
-import com.han.simulator.servers.TomcatStarter;
+import com.han.simulator.servers.Simulator;
 import com.simulatieTool.Webapp.*;
 
 public class MainScreenController {
@@ -100,7 +100,7 @@ public class MainScreenController {
 	
 	public void StartSimulatorInternal(){
 		startSimulator.setDisable(true);
-		if (TomcatStarter.Start()) {
+		if (Simulator.Start()) {
 			try {
 				Simulator.Open();
 			} catch (IOException e) {

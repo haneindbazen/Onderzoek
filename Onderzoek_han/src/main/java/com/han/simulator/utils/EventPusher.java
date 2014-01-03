@@ -12,6 +12,13 @@ import org.apache.catalina.websocket.MessageInbound;
 import org.apache.catalina.websocket.StreamInbound;
 import org.apache.catalina.websocket.WebSocketServlet;
 
+/**
+* The Websocket servlet that handles websocket traffics
+* @author Armand Ndizigiye
+* @version 0.1
+*/
+
+@SuppressWarnings("deprecation")
 public class EventPusher extends WebSocketServlet {
 	
 	public static ArrayList<EchoMessageInbound> clients = new ArrayList<EchoMessageInbound>();
@@ -65,7 +72,12 @@ public class EventPusher extends WebSocketServlet {
 			
 		}
 		
-		public void senMessage(String message) throws IOException{
+		/**
+		 * Send an event message to the browser
+		 * @param message - the event message
+		 * @throws IOException
+		 */
+		public void sendMessage(String message) throws IOException{
 			getWsOutbound().writeTextMessage(CharBuffer.wrap(message));
 		}
 
@@ -80,7 +92,7 @@ public class EventPusher extends WebSocketServlet {
 				e1.printStackTrace();
 			}
 			
-			ArrayList<String> lines = TranscriptReader.GetLines(getClass().getResource("/meldingen.txt").getPath());
+			ArrayList<String> lines = Transcript.Read(getClass().getResource("/meldingen.txt").getPath());
 			for (String line:lines) {
 				System.out.println(line);
 				Drools.FireRules(new Event(line));
