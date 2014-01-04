@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,103 +17,102 @@ import javafx.stage.Stage;
 import com.han.simulator.servers.Guvnor;
 import com.han.simulator.servers.Simulator;
 import com.han.simulator.servers.Simulator;
-import com.simulatieTool.Webapp.*;
+import com.han.simulator.utils.Workspace;
 
+/**
+ * Controller class for MainScreen.fxml
+ * 
+ * @author ndizigiye
+ * @version 0.1
+ */
 public class MainScreenController {
 
-	@FXML private Button startSimulator;
-	@FXML private Button startGuvnor;
-	@FXML private Button stopGuvnor;
-	@FXML private ImageView waitImage;
-	@FXML private Label waitStartText;
-	@FXML private Label waitStopText;
-	@FXML private Button browseTomcat;
-	@FXML private Button browseGuvnor;
-	@FXML private TextField tomcatLocation;
-	@FXML private TextField guvnorLocation;
-	
+	@FXML
+	private Button startAlles;
+	@FXML
+	private ImageView waitImage;
+	@FXML
+	private Label statusLabel;
+
 	/**
-	 * Start the guvnor app and open it in the browser
+	 * Starts everything
+	 */
+	
+	public void setText(final String text){
+		Platform.runLater(new Runnable(){
+			public void run() {
+				waitImage.setVisible(true);
+				statusLabel.setVisible(true);
+				statusLabel.setText(text);
+				statusLabel.setText("");
+			}});
+	}
+	
+	public void clearText(){
+		Platform.runLater(new Runnable(){
+			public void run() {
+				waitImage.setVisible(false);
+				statusLabel.setText("");
+			}});
+	}
+
+	public void StartAlles() {
+		Thread t = new Thread() {
+			public void run() {
+				setText("configuring workspace directory...");
+				Workspace.Init();
+				Guvnor.Start();
+				Guvnor.Open();
+				Simulator.Start();
+				Simulator.Open();
+				clearText();
+			}
+		};
+		t.start();
+	}
+
+	/**
+	 * Start guvnor in a new thread
 	 */
 	public void StartGuvnor() {
 		Thread t = new Thread() {
-		    public void run() {
-		    	StartGuvnorInternal();
-		    }
+			public void run() {
+				StartGuvnorInternal();
+			}
 		};
 		t.start();
-	}
-	
-	public void StopGunvorInternal(){
-		stopGuvnor.setDisable(true);
-		waitStopText.setVisible(true);
-		stopGuvnor.setDisable(true);
-		waitImage.setVisible(true);
-		Guvnor.Stop();
-		waitStopText.setVisible(false);
-		waitImage.setVisible(false);
-		startGuvnor.setDisable(false);
-	}
-	public void StopGuvnor(){
-		Thread t = new Thread() {
-		    public void run() {
-		    	StopGunvorInternal();
-		    }
-		};
-		t.start();
-	}
-	
-	public void StartGuvnorInternal(){
-		try {
-			startGuvnor.setDisable(true);
-			waitStartText.setVisible(true);
-			waitImage.setVisible(true);
-			Guvnor.Start();
-			waitStartText.setVisible(false);
-			waitImage.setVisible(false);
-			stopGuvnor.setVisible(true);
-			Guvnor.Open();
-		} catch (IOException | URISyntaxException e) {
-			startGuvnor.setDisable(false);
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-		}
 	}
 
-	public void BrowseTomcat(){
+	public void StopGunvorInternal() {
 	}
-	
-	public void BrowseGuvnor(){
-		
-	}
+
 	/**
-	 * Start the main simulator app and open it in the browser
+	 * Stop the guvnor app
+	 */
+	public void StopGuvnor() {
+		Thread t = new Thread() {
+			public void run() {
+				StopGunvorInternal();
+			}
+		};
+		t.start();
+	}
+
+	public void StartGuvnorInternal() {
+	}
+
+	/**
+	 * Start the simulator in a new thread
 	 */
 	public void StartSimulator() {
 		Thread t = new Thread() {
-		    public void run() {
-		    	StartSimulatorInternal();
-		    }
+			public void run() {
+				StartSimulatorInternal();
+			}
 		};
 		t.start();
 	}
-	
-	public void StartSimulatorInternal(){
-		startSimulator.setDisable(true);
-		if (Simulator.Start()) {
-			try {
-				Simulator.Open();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				startSimulator.setDisable(false);
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+
+	public void StartSimulatorInternal() {
 	}
 }
-
-

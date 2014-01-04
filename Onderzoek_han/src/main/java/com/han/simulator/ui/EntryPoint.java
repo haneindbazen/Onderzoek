@@ -6,6 +6,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Entrypoint class for the project,
+ * it starts the Main UI
+ * @author ndizigiye
+ * @version 0.1
+ */
 public class EntryPoint extends Application {
 	
 	public Stage primaryStage;

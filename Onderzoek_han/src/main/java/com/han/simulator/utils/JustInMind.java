@@ -25,6 +25,92 @@ public class JustInMind {
 	static final SimpleHtmlSerializer htmlSerializer = new SimpleHtmlSerializer(
 			props);
 
+	/**
+	 * Copy the prototype dir to the project path
+	 * @param String path - The path to the prototype directory
+	 */
+	public static void CopyPrototype(String path){
+		File prototypesDir = new File(path);
+		try {
+			homePrototypesDir = new File(JustInMind.class.getResource("/Simulator/interfaces")
+					.getPath() + "/" + prototypesDir.getName());
+			FileUtils.cleanDirectory(homePrototypesDir);
+		}
+
+		catch (NullPointerException | IllegalArgumentException e) {
+			homePrototypesDir.mkdir();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		 try {
+		 FileUtils.copyDirectory(prototypesDir, homePrototypesDir);
+		 } catch (IOException e) {
+		 // TODO Auto-generated catch block
+		 e.printStackTrace();
+		 }
+		
+	}
+	
+	/**
+	 * Rename the interfaces wi]opk'=[o8 nc 50 /[[0 ./k,./
+	 * 
+	 *\
+	 *
+	 *
+	 * ;' ,;-l8t5uk,gl;=/[
+	 * 
+	 * iFileUtils.forceDelete(screen);}
+	 */
+	public static void RenameInterfaces(){
+		File screenDir = new File(homePrototypesDir.getPath()
+				+ "/review/screens");
+		Collection<File> screens = FileUtils.listFiles(screenDir,
+				TrueFileFilter.TRUE, TrueFileFilter.TRUE);
+
+		ArrayList<File> screenList = new ArrayList<File>(screens);
+
+		for (File screen : screenList) {
+			TagNode node = null;
+			try {
+				node = cleaner.clean(screen);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			TagNode[] cssLinks = node.getElementsByAttValue("rel", "stylesheet", true, true);
+			
+			for (TagNode cssLink: cssLinks){
+				String link = cssLink.getAttributeByName("href");
+				link = link.replace("./", "/simulator/interfaces/Prototype1/");
+				cssLink.setAttribute("href", link);
+			}
+			
+			TagNode alignmentBox = node.findElementByAttValue("id","alignmentBox", true, true);
+			alignmentBox.removeFromTree();
+			String html = cleaner.getInnerHtml(node);
+			System.out.println("----------------");
+			TagNode screenNode = node.findElementByAttValue("class",
+					"screen firer ie-background commentable", true, true);
+			String screenName = screenNode.getAttributeByName("name");
+			screenName = screenName.toLowerCase();
+			File newDest = new File(homePrototypesDir.getPath()
+					+ "/review/screens/" + screenName + ".html");
+
+			if (!newDest.exists()) {
+				try {
+					FileUtils.write(newDest, html, Charset.defaultCharset());
+					FileUtils.forceDelete(screen);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	
 	public static void main(String[] args) throws IOException {
 
 		File prototypesDir = new File("C:/Users/ndizigiye/Pictures/justinmind/Prototype1");

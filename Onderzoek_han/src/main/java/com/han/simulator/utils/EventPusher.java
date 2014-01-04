@@ -95,7 +95,7 @@ public class EventPusher extends WebSocketServlet {
 			ArrayList<String> lines = Transcript.Read(getClass().getResource("/meldingen.txt").getPath());
 			for (String line:lines) {
 				System.out.println(line);
-				Drools.FireRules(new Event(line));
+				Drools.FireRules(new Event(line),2000);
 				try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
