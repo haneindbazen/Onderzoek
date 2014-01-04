@@ -13,7 +13,7 @@ import org.htmlcleaner.SimpleHtmlSerializer;
 import org.htmlcleaner.TagNode;
 
 /**
-* This class handles generated Htmls from JustinMind 
+* This class handles generated Htmls from JustinMind
 * @author Armand Ndizigiye
 * @version 0.1
 */
