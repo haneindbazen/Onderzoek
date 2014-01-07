@@ -104,8 +104,7 @@ public class EventPusher extends WebSocketServlet {
 				System.out.println(line);
 				Drools.FireRules(new Event(line));
 				 try {
-				 String delay = MainScreenController.delay.getText();
-				 Thread.sleep(Long.valueOf(delay));
+				 Thread.sleep(2000);
 				 } catch (InterruptedException e) {
 				 // TODO Auto-generated catch block
 				 e.printStackTrace();

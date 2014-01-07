@@ -139,7 +139,7 @@ public class MainScreenController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		Image ajaxLoader = new Image(this.getClass().getResource("ajax-loader.gif").getPath());
+		Image ajaxLoader = new Image("file:"+getClass().getResource("/ajax-loader.gif"));
 		waitImage.setImage(ajaxLoader);
 		Workspace.Init();
 		transcriptChooser.getItems().clear();

@@ -26,7 +26,6 @@ margin: 10px 0px 10px 30px;
 </style>
 <script type="text/javascript">
 	var ws = null;
-	//var interfaceDir = "C:\Users\ndizigiye\Pictures\simulator\";
 
 	if ('WebSocket' in window) {
 		ws = new WebSocket("ws://localhost:9090/pusher");
@@ -39,12 +38,12 @@ margin: 10px 0px 10px 30px;
 	ws.onopen = function() {
 	};
 	ws.onmessage = function(event) {
+		console.log(event.data);
 		$("#received").val(event.data);
 		var melding = event.data;
 		var screenName = melding.split("#")[1];
 		var meldingValue = melding.split("#")[0];
-		var screenSrc = '/simulator/interfaces/'+<%=Workspace.prototypeName%>+'/review/screens/'+screenName+'.html';
-		console.log(event.data);
+		var screenSrc = "/Simulator/interfaces/"+"<%=Workspace.prototypeName%>"+"/review/screens/"+screenName+".html";
 		$('#iframe').attr('src', screenSrc);
 	};
 	ws.onclose = function() {

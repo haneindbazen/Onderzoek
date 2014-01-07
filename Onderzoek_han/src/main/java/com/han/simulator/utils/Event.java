@@ -31,8 +31,7 @@ public class Event {
 	 * @throws IOException
 	 */
 
-	public void PushEventToBrowser(Event e, String interfaceName)
-			throws IOException {
+	public void PushEventToBrowser(Event e, String interfaceName)throws IOException {
 		for (EchoMessageInbound mi : EventPusher.clients) {
 			mi.sendMessage(e.getMessage()+"#"+interfaceName);
 		}

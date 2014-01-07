@@ -13,9 +13,15 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.drools.KnowledgeBase;
+import org.drools.KnowledgeBaseFactory;
 import org.drools.agent.KnowledgeAgent;
 import org.drools.agent.KnowledgeAgentConfiguration;
 import org.drools.agent.KnowledgeAgentFactory;
+import org.drools.builder.KnowledgeBuilder;
+import org.drools.builder.KnowledgeBuilderError;
+import org.drools.builder.KnowledgeBuilderErrors;
+import org.drools.builder.KnowledgeBuilderFactory;
+import org.drools.builder.ResourceType;
 import org.drools.io.ResourceFactory;
 import org.drools.logger.KnowledgeRuntimeLogger;
 import org.drools.logger.KnowledgeRuntimeLoggerFactory;
@@ -46,9 +52,9 @@ public class Drools {
 	 * @throws IOException
 	 * @throws SAXException
 	 */
-	public static void Init(String URL) throws TransformerException,ParserConfigurationException,IOException,SAXException{
+	public static void Init(String URL) throws TransformerException,ParserConfigurationException,IOException,SAXException,Exception{
 		setRemoteAddress(URL);
-		kbase = readRemoteKnowledgeBase();
+		kbase = readKnowledgeBase();//readRemoteKnowledgeBase();
 		ksession = kbase.newStatefulKnowledgeSession();
 		logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
 	}
@@ -85,6 +91,21 @@ public class Drools {
         KnowledgeAgent kagent = KnowledgeAgentFactory.newKnowledgeAgent( "test agent", kaconf );
         kagent.applyChangeSet( ResourceFactory.newClassPathResource("guvnor.xml"));
         return kagent.getKnowledgeBase();
+    }
+    
+    private static KnowledgeBase readKnowledgeBase() throws Exception {
+        KnowledgeBuilder kbuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
+        kbuilder.add(ResourceFactory.newClassPathResource("Sample.drl"), ResourceType.DRL);
+        KnowledgeBuilderErrors errors = kbuilder.getErrors();
+        if (errors.size() > 0) {
+            for (KnowledgeBuilderError error: errors) {
+                System.err.println(error);
+            }
+            throw new IllegalArgumentException("Could not parse knowledge.");
+        }
+        KnowledgeBase kbase = KnowledgeBaseFactory.newKnowledgeBase();
+        kbase.addKnowledgePackages(kbuilder.getKnowledgePackages());
+        return kbase;
     }
     
     /**
