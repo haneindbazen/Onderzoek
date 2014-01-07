@@ -3,10 +3,14 @@ package com.han.simulator.ui;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -25,7 +29,7 @@ import com.han.simulator.utils.Workspace;
  * @author ndizigiye
  * @version 0.1
  */
-public class MainScreenController {
+public class MainScreenController implements Initializable {
 
 	@FXML
 	private Button startAlles;
@@ -33,36 +37,53 @@ public class MainScreenController {
 	private ImageView waitImage;
 	@FXML
 	private Label statusLabel;
+	@FXML
+	private static ChoiceBox<String> transcriptChooser;
+	@FXML
+	private static ChoiceBox<String> prototypeChooser;
+	@FXML
+	public static TextField delay;
 
-	/**
-	 * Starts everything
-	 */
-	
-	public void setText(final String text){
-		Platform.runLater(new Runnable(){
+	public static String getTranscript() {
+		String chosenTranscript = transcriptChooser.getValue();
+		return chosenTranscript;
+	}
+
+	public static String getPrototype() {
+		String chosenPrototype = prototypeChooser.getValue();
+		return chosenPrototype;
+	}
+
+	public void setText(final String text) {
+		Platform.runLater(new Runnable() {
 			public void run() {
 				waitImage.setVisible(true);
 				statusLabel.setVisible(true);
 				statusLabel.setText(text);
-				statusLabel.setText("");
-			}});
+			}
+		});
 	}
-	
-	public void clearText(){
-		Platform.runLater(new Runnable(){
+
+	public void clearText() {
+		Platform.runLater(new Runnable() {
 			public void run() {
 				waitImage.setVisible(false);
 				statusLabel.setText("");
-			}});
+			}
+		});
 	}
 
+	/**
+	 * Starts everything
+	 */
 	public void StartAlles() {
 		Thread t = new Thread() {
 			public void run() {
+				Workspace.InitJustInMind();
 				setText("configuring workspace directory...");
-				Workspace.Init();
-				Guvnor.Start();
-				Guvnor.Open();
+//				Workspace.InitGuvnor();
+//				Guvnor.Start();
+//				Guvnor.Open();
 				Simulator.Start();
 				Simulator.Open();
 				clearText();
@@ -114,5 +135,22 @@ public class MainScreenController {
 	}
 
 	public void StartSimulatorInternal() {
+	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		Image ajaxLoader = new Image(this.getClass().getResource("ajax-loader.gif").getPath());
+		waitImage.setImage(ajaxLoader);
+		Workspace.Init();
+		transcriptChooser.getItems().clear();
+		prototypeChooser.getItems().clear();
+		for (String transcriptName : Workspace.listTranscripts()) {
+			transcriptChooser.getItems().add(transcriptName);
+		}
+
+		for (String prototypeName : Workspace.listPrototypes()) {
+			prototypeChooser.getItems().add(prototypeName);
+		}
+
 	}
 }

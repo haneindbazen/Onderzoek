@@ -8,6 +8,8 @@ import java.util.Collection;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 
+import com.han.simulator.ui.MainScreenController;
+
 /**
  * This class initialize directories and files for the simulator
  * 
@@ -22,6 +24,7 @@ public class Workspace {
 	public static File InterfacesDir;
 	public static File currentTranscript;
 	public static File currentPrototype;
+	public static String prototypeName;
 	/**
 	 * Initialize the simulator working space
 	 * by creating needed directories
@@ -29,22 +32,10 @@ public class Workspace {
 	public static void Init() {
 
 		String userDir = System.getProperty("user.home");
-		File currentTomcatDir = new File(Workspace.class
-				.getResource("/Tomcat7").getPath());
 		try {
 			SimulatorDir = new File(userDir + "/" + "com.han.simulator");
 		} catch (NullPointerException | IllegalArgumentException e) {
 			SimulatorDir.mkdir();
-		}
-
-		TomcatDir = new File(SimulatorDir.getPath() + "/Tomcat");
-		if (!TomcatDir.exists()) {
-			try {
-				FileUtils.copyDirectory(currentTomcatDir, TomcatDir);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		
 		TranscriptsDir = new File(SimulatorDir.getPath() + "/Transcript");
@@ -57,26 +48,62 @@ public class Workspace {
 			InterfacesDir.mkdir();
 		}
 	}
+	
+	public static void InitJustInMind(){
+		JustInMind.CopyPrototype(InterfacesDir+"/"+MainScreenController.getPrototype());
+		JustInMind.RenameInterfaces();
+		prototypeName = MainScreenController.getPrototype();
+		
+	}
+	public static void InitGuvnor(){
+
+		File currentTomcatDir = new File(Workspace.class
+				.getResource("/Tomcat7").getPath());
+		
+		TomcatDir = new File(SimulatorDir.getPath() + "/Tomcat");
+		if (!TomcatDir.exists()) {
+			try {
+				FileUtils.copyDirectory(currentTomcatDir, TomcatDir);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 	/**
 	 * Get a list of all present prototypes
 	 * @return String[] - a list of prototype names
 	 */
-	public static ArrayList<File> listPrototypes(){
+	public static ArrayList<String> listPrototypes(){
+		
+		ArrayList<String> prototypeNames = new ArrayList<String>();
 		
 		// TODO only dirs allowed
-		Collection<File> prototypesDirs = FileUtils.listFiles(InterfacesDir,
+		Collection<File> prototypesDirs = FileUtils.listFilesAndDirs(InterfacesDir,
 				TrueFileFilter.TRUE, TrueFileFilter.TRUE);
 		ArrayList<File> prototypesDirsList = new ArrayList<File>(prototypesDirs);
 		
-		return prototypesDirsList;
+		for(File prototype : prototypesDirsList ){
+			prototypeNames.add(prototype.getName());
+		}
+		
+		// TODO lazy solution
+		prototypeNames.remove(0);
+		return prototypeNames;
 	}
 	
-	public static ArrayList<File> listTranscripts(){
+	public static ArrayList<String> listTranscripts(){
+		
+		ArrayList<String> fileNames = new ArrayList<String>();
+		
 		// TODO only files allowed
-		Collection<File> TranscriptsDirs = FileUtils.listFiles(TranscriptsDir,
+		Collection<File> Transcripts = FileUtils.listFiles(TranscriptsDir,
 				TrueFileFilter.TRUE, TrueFileFilter.TRUE);
-		ArrayList<File> TranscriptsDirsList = new ArrayList<File>(TranscriptsDirs);
-		return TranscriptsDirsList;
+		ArrayList<File> TranscriptsList = new ArrayList<File>(Transcripts);
+		for(File transcript : TranscriptsList ){
+			fileNames.add(transcript.getName());
+		}
+		return fileNames;
 	}
 
 }

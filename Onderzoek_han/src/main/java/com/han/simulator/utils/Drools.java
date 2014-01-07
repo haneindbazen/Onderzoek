@@ -59,11 +59,10 @@ public class Drools {
 	 * @param event - The event that occurs
 	 * @param interval - the interval between events
 	 */
-	public static void FireRules(Event event, long interval) {
+	public static void FireRules(Event event) {
 		try {
 			ksession.insert(event);
 			ksession.fireAllRules();
-			Thread.sleep(2000);
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
