@@ -27,7 +27,7 @@ public class Guvnor {
 	public static void Start() {
 		bootstrap = new Bootstrap();
 		String tomcatDir = Workspace.TomcatDir.getPath();
-		bootstrap.setCatalinaHome(tomcatDir);//"C:/Users/ndizigiye/workspace/Tomcat7");
+		bootstrap.setCatalinaHome(tomcatDir);
 		try {
 			bootstrap.start();
 			

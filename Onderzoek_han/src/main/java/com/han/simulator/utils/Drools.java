@@ -54,7 +54,8 @@ public class Drools {
 	 */
 	public static void Init(String URL) throws TransformerException,ParserConfigurationException,IOException,SAXException,Exception{
 		setRemoteAddress(URL);
-		kbase = readKnowledgeBase();//readRemoteKnowledgeBase();
+		//readKnowledgeBase() for reading a local drl file
+		kbase = readRemoteKnowledgeBase();
 		ksession = kbase.newStatefulKnowledgeSession();
 		logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
 	}

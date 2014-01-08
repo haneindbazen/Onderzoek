@@ -68,7 +68,7 @@ public class MainScreenController implements Initializable {
 		Platform.runLater(new Runnable() {
 			public void run() {
 				waitImage.setVisible(false);
-				statusLabel.setText("");
+				//statusLabel.setText("");
 			}
 		});
 	}
@@ -79,13 +79,17 @@ public class MainScreenController implements Initializable {
 	public void StartAlles() {
 		Thread t = new Thread() {
 			public void run() {
-				Workspace.InitJustInMind();
 				setText("configuring workspace directory...");
-//				Workspace.InitGuvnor();
-//				Guvnor.Start();
-//				Guvnor.Open();
+				Workspace.InitJustInMind();
+				setText("initializing guvnor...");
+				Workspace.InitGuvnor();
+				setText("starting guvnor app...");
+				Guvnor.Start();
+				setText("starting simulator app...");
 				Simulator.Start();
+				Guvnor.Open();
 				Simulator.Open();
+				setText("Everything started succefully!");
 				clearText();
 			}
 		};
@@ -139,7 +143,7 @@ public class MainScreenController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		Image ajaxLoader = new Image("file:"+getClass().getResource("/ajax-loader.gif"));
+		Image ajaxLoader = new Image("file:"+getClass().getResource("/ajax-loader.gif").getPath());
 		waitImage.setImage(ajaxLoader);
 		Workspace.Init();
 		transcriptChooser.getItems().clear();

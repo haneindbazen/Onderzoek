@@ -43,7 +43,7 @@ margin: 10px 0px 10px 30px;
 		var melding = event.data;
 		var screenName = melding.split("#")[1];
 		var meldingValue = melding.split("#")[0];
-		var screenSrc = "/Simulator/interfaces/"+"<%=Workspace.prototypeName%>"+"/review/screens/"+screenName+".html";
+		var screenSrc = "/simulator/interfaces/"+"<%=Workspace.prototypeName%>"+"/review/screens/"+screenName+".html";
 		$('#iframe').attr('src', screenSrc);
 	};
 	ws.onclose = function() {

@@ -77,30 +77,19 @@ public class Workspace {
 	public static ArrayList<String> listPrototypes(){
 		
 		ArrayList<String> prototypeNames = new ArrayList<String>();
-		
 		// TODO only dirs allowed
-		Collection<File> prototypesDirs = FileUtils.listFilesAndDirs(InterfacesDir,
-				TrueFileFilter.TRUE, TrueFileFilter.TRUE);
-		ArrayList<File> prototypesDirsList = new ArrayList<File>(prototypesDirs);
-		
-		for(File prototype : prototypesDirsList ){
+		File[] prototypesDirs = InterfacesDir.listFiles();
+		for(File prototype : prototypesDirs ){
 			prototypeNames.add(prototype.getName());
 		}
-		
-		// TODO lazy solution
-		prototypeNames.remove(0);
 		return prototypeNames;
 	}
 	
 	public static ArrayList<String> listTranscripts(){
-		
-		ArrayList<String> fileNames = new ArrayList<String>();
-		
 		// TODO only files allowed
-		Collection<File> Transcripts = FileUtils.listFiles(TranscriptsDir,
-				TrueFileFilter.TRUE, TrueFileFilter.TRUE);
-		ArrayList<File> TranscriptsList = new ArrayList<File>(Transcripts);
-		for(File transcript : TranscriptsList ){
+		ArrayList<String> fileNames = new ArrayList<String>();
+		File[] Transcripts = TranscriptsDir.listFiles();
+		for(File transcript : Transcripts ){
 			fileNames.add(transcript.getName());
 		}
 		return fileNames;
