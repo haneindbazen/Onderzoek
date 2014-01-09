@@ -44,11 +44,31 @@ public class Workspace {
 		TranscriptsDir = new File(SimulatorDir.getPath() + "/Transcript");
 		if (!TranscriptsDir.exists()) {
 			TranscriptsDir.mkdir();
+			String transcriptSource = Workspace.class.getResource("/Meldingen.zip").getPath();
+			ZipFile zipFile;
+			try {
+				zipFile = new ZipFile(transcriptSource);
+				zipFile.extractAll(TranscriptsDir.getPath());
+			} catch (ZipException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		InterfacesDir = new File(SimulatorDir.getPath() + "/Interfaces");
 		if (!InterfacesDir.exists()) {
-			InterfacesDir.mkdir();//
+			InterfacesDir.mkdir();
+			/*Sample prototype*/
+//			String prototypeSource = Workspace.class.getResource("/Prototype.zip").getPath();
+//			ZipFile zipFile;
+//			try {
+//				zipFile = new ZipFile(prototypeSource);
+//				zipFile.extractAll(InterfacesDir.getPath());
+//			} catch (ZipException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			
 		}
 	}
 	
