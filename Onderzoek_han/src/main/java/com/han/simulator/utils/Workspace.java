@@ -48,7 +48,7 @@ public class Workspace {
 		
 		InterfacesDir = new File(SimulatorDir.getPath() + "/Interfaces");
 		if (!InterfacesDir.exists()) {
-			InterfacesDir.mkdir();
+			InterfacesDir.mkdir();//
 		}
 	}
 	
