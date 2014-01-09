@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import net.lingala.zip4j.core.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 
@@ -55,19 +58,14 @@ public class Workspace {
 		prototypeName = MainScreenController.getPrototype();
 		
 	}
-	public static void InitGuvnor(){
+	public static void InitGuvnor() throws ZipException{
 
-		File currentTomcatDir = new File(Workspace.class
-				.getResource("/Tomcat7").getPath());
-		
 		TomcatDir = new File(SimulatorDir.getPath() + "/Tomcat");
 		if (!TomcatDir.exists()) {
-			try {
-				FileUtils.copyDirectory(currentTomcatDir, TomcatDir);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			TomcatDir.mkdir();
+			String tomcatSource = Workspace.class.getResource("/Tomcat.zip").getPath();
+				ZipFile zipFile = new ZipFile(tomcatSource);
+				zipFile.extractAll(TomcatDir.getPath());
 		}
 	}
 	/**

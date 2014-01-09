@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import net.lingala.zip4j.exception.ZipException;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
@@ -36,7 +38,15 @@ public class MainScreenController implements Initializable {
 	@FXML
 	private ImageView waitImage;
 	@FXML
+	private ImageView errorImage;
+	@FXML
 	private Label statusLabel;
+	@FXML
+	private Label projectDir;
+	@FXML
+	private static Label errorLabel;
+	@FXML
+	private static Pane errorPanel;
 	@FXML
 	private static ChoiceBox<String> transcriptChooser;
 	@FXML
@@ -47,6 +57,11 @@ public class MainScreenController implements Initializable {
 	public static String getTranscript() {
 		String chosenTranscript = transcriptChooser.getValue();
 		return chosenTranscript;
+	}
+	
+	public static String getDelay() {
+		String delayValue = delay.getText();
+		return delayValue;
 	}
 
 	public static String getPrototype() {
@@ -63,12 +78,31 @@ public class MainScreenController implements Initializable {
 			}
 		});
 	}
+	
+	public static void setError(final String text) {
+		Platform.runLater(new Runnable() {
+			public void run() {
+				errorPanel.setVisible(true);
+				errorLabel.setText(text);
+			}
+		});
+	}
+	
+	public void clearError() {
+		Platform.runLater(new Runnable() {
+			public void run() {
+				errorPanel.setVisible(false);
+			}
+		});
+	}
 
-	public void clearText() {
+	public void clearText(final boolean clearAlsoStatus) {
 		Platform.runLater(new Runnable() {
 			public void run() {
 				waitImage.setVisible(false);
-				//statusLabel.setText("");
+				if(clearAlsoStatus){
+				statusLabel.setText("");
+				}
 			}
 		});
 	}
@@ -78,22 +112,45 @@ public class MainScreenController implements Initializable {
 	 */
 	public void StartAlles() {
 		Thread t = new Thread() {
+			@SuppressWarnings("deprecation")
 			public void run() {
 				setText("configuring workspace directory...");
+				try {
 				Workspace.InitJustInMind();
+				}
+				catch(Exception e){
+					setError("Initializing interfaces failed, provide a valid prototype directory");
+					clearText(true);
+					this.stop();
+				}
 				setText("initializing guvnor...");
-				Workspace.InitGuvnor();
+				try {
+					Workspace.InitGuvnor();
+				} catch (ZipException e) {
+					setError("Initializing Guvnor failed");
+					this.stop();
+				}
 				setText("starting guvnor app...");
 				Guvnor.Start();
 				setText("starting simulator app...");
 				Simulator.Start();
-				Guvnor.Open();
-				Simulator.Open();
+				//Guvnor.Open();
+				//Simulator.Open();
 				setText("Everything started succefully!");
-				clearText();
+				clearText(false);
 			}
 		};
+		
+		if(getTranscript() == null || getPrototype() == null){
+			setError("Please choose a transcript file and a prototype");
+		}
+		else if(!getTranscript().endsWith(".txt")){
+			setError("Only txt transcripts are allowed");
+		}
+		else{
+		clearError();
 		t.start();
+		}
 	}
 
 	/**
@@ -140,12 +197,19 @@ public class MainScreenController implements Initializable {
 
 	public void StartSimulatorInternal() {
 	}
+	
+	public void Test(){
+		setText("Trancript:-"+getTranscript()+"-Prototype:-"+getPrototype()+"-"+"Delay:-"+getDelay()+"-");
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		Image ajaxLoader = new Image("file:"+getClass().getResource("/ajax-loader.gif").getPath());
+		Image error = new Image("file:"+getClass().getResource("/error.png").getPath());
 		waitImage.setImage(ajaxLoader);
+		errorImage.setImage(error);
 		Workspace.Init();
+		projectDir.setText("Project directory : " + Workspace.SimulatorDir.getPath());
 		transcriptChooser.getItems().clear();
 		prototypeChooser.getItems().clear();
 		for (String transcriptName : Workspace.listTranscripts()) {

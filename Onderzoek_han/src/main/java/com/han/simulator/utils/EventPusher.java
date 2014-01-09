@@ -103,8 +103,14 @@ public class EventPusher extends WebSocketServlet {
 			for (String line : lines) {
 				System.out.println(line);
 				Drools.FireRules(new Event(line));
+				long delay;
+			    try { 
+			         delay = Integer.parseInt(MainScreenController.getDelay())*1000; 
+			    } catch(NumberFormatException e) { 
+			        delay = 2000; 
+			    }
 				 try {
-				 Thread.sleep(2000);
+				 Thread.sleep(delay);
 				 } catch (InterruptedException e) {
 				 // TODO Auto-generated catch block
 				 e.printStackTrace();

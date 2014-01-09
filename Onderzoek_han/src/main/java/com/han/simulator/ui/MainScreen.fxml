@@ -10,12 +10,12 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="536.0" prefWidth="615.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.han.simulator.ui.MainScreenController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="279.0" prefWidth="659.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.han.simulator.ui.MainScreenController">
   <children>
-    <Pane blendMode="DARKEN" layoutX="4.0" layoutY="10.0" opacity="1.0" prefHeight="536.0" prefWidth="608.0">
+    <Pane blendMode="DARKEN" layoutX="0.0" layoutY="0.0" opacity="1.0" prefHeight="279.0" prefWidth="659.0">
       <children>
         <Button fx:id="startAlles" layoutX="131.0" layoutY="179.0" mnemonicParsing="false" onMousePressed="#StartAlles" prefHeight="30.9609375" prefWidth="110.0" text="Start" />
-        <Label fx:id="statusLabel" layoutX="290.0" layoutY="187.0" prefWidth="300.0" text="status label" visible="false" />
+        <Label fx:id="statusLabel" layoutX="290.0" layoutY="187.0" prefWidth="369.0" text="status label" visible="false" />
         <Button id="startAlles" layoutX="14.0" layoutY="179.0" mnemonicParsing="false" onMousePressed="#StartAlles" prefHeight="30.9609375" prefWidth="110.0" text="Stop" />
         <ImageView fx:id="waitImage" fitHeight="29.90234375" fitWidth="39.869791666666664" layoutX="246.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true" visible="false">
           <image>
@@ -34,8 +34,29 @@
           </items>
         </ChoiceBox>
         <Label layoutX="14.0" layoutY="136.0" text="Choose Prototype" />
-        <Label layoutX="276.0" layoutY="91.0" text="Delay (in ms):" />
-        <TextField fx:id="delay" layoutX="358.0" layoutY="90.0" prefWidth="60.0" />
+        <Label layoutX="276.0" layoutY="91.0" text="Delay (in sec):" />
+        <TextField fx:id="delay" layoutX="358.0" layoutY="90.0" prefWidth="26.000099999997474" />
+        <Pane fx:id="errorPanel" layoutX="1.0" layoutY="60.0" prefHeight="21.9609375" prefWidth="644.0" visible="false">
+          <children>
+            <ImageView fx:id="errorImage" fitHeight="19.500091552734375" fitWidth="26.0001220703125" layoutX="14.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
+              <image>
+                <Image url="@../../../../../content/error.png" />
+              </image>
+            </ImageView>
+            <Label fx:id="errorLabel" layoutX="42.0" layoutY="3.0" prefWidth="595.0" text="Error message" />
+          </children>
+        </Pane>
+        <Label layoutX="84.0" layoutY="21.0" prefWidth="271.0" text="Let's Change the Screen">
+          <font>
+            <Font size="25.0" />
+          </font>
+        </Label>
+        <Label layoutX="355.0" layoutY="33.0" prefHeight="20.9609375" prefWidth="33.0" text="v 0. 1" />
+        <Label fx:id="projectDir" layoutX="14.0" layoutY="230.0" prefWidth="631.0" text="Project directory : ">
+          <font>
+            <Font size="15.0" />
+          </font>
+        </Label>
       </children>
     </Pane>
   </children>
