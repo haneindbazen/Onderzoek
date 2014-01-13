@@ -68,7 +68,7 @@ margin: 10px 0px 10px 30px;
 </script>
 </head>
 <body style= "margin:0px;padding:0px;overflow:hidden">
-<input id="gunvorLink" class="pure-input-1-2" type="text" placeholder="gunvor rules link">
+<input id="gunvorLink" class="pure-input-1-2" size="60" type="text" placeholder="gunvor rules link">
 <button class="pure-button">Start</button>
 <input id="received" class="pure-input-1-2" size="60"type="text" placeholder="message received"></br>
 <iframe id="iframe" src="/simulator/websocket.jsp" scrolling="no" onload="javascript:resizeIframe(this);"></iframe>

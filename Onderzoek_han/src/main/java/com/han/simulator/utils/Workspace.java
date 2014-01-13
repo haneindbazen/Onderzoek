@@ -44,7 +44,7 @@ public class Workspace {
 		TranscriptsDir = new File(SimulatorDir.getPath() + "/Transcript");
 		if (!TranscriptsDir.exists()) {
 			TranscriptsDir.mkdir();
-			String transcriptSource = Workspace.class.getResource("/Meldingen.zip").getPath();
+			String transcriptSource = Workspace.class.getResource("Meldingen.zip").getPath();
 			ZipFile zipFile;
 			try {
 				zipFile = new ZipFile(transcriptSource);
@@ -83,7 +83,7 @@ public class Workspace {
 		TomcatDir = new File(SimulatorDir.getPath() + "/Tomcat");
 		if (!TomcatDir.exists()) {
 			TomcatDir.mkdir();
-			String tomcatSource = Workspace.class.getResource("/Tomcat.zip").getPath();
+			String tomcatSource = Workspace.class.getResource("Tomcat.zip").getPath();
 				ZipFile zipFile = new ZipFile(tomcatSource);
 				zipFile.extractAll(TomcatDir.getPath());
 		}

@@ -36,6 +36,8 @@ public class MainScreenController implements Initializable {
 	@FXML
 	private Button startAlles;
 	@FXML
+	private Button stopAlles;
+	@FXML
 	private ImageView waitImage;
 	@FXML
 	private ImageView errorImage;
@@ -134,14 +136,15 @@ public class MainScreenController implements Initializable {
 				Guvnor.Start();
 				setText("starting simulator app...");
 				Simulator.Start();
-				//Guvnor.Open();
-				//Simulator.Open();
+				Guvnor.Open();
+				Simulator.Open();
 				setText("Everything started succefully!");
 				clearText(false);
 			}
 		};
 		
 		if(getTranscript() == null || getPrototype() == null){
+			
 			setError("Please choose a transcript file and a prototype");
 		}
 		else if(!getTranscript().endsWith(".txt")){
@@ -149,8 +152,43 @@ public class MainScreenController implements Initializable {
 		}
 		else{
 		clearError();
+		startAlles.setDisable(true);
+		stopAlles.setDisable(false);
 		t.start();
 		}
+	}
+	
+	/**
+	 * Stops everything
+	 */
+	public void StopAlles() {
+		Thread t = new Thread() {
+			@SuppressWarnings("deprecation")
+			public void run() {
+				setText("stopping guvnor...");
+				try {
+				Guvnor.Stop();
+				}
+				catch(Exception e){
+					setError("Stopping guvnor failed");
+					clearText(true);
+					this.stop();
+				}
+				setText("stopping simulator server...");
+				try {
+					Workspace.InitGuvnor();
+				} catch (ZipException e) {
+					setError("Stopping simulator server failed");
+					this.stop();
+				}
+				setText("Everything stopped succefully!");
+				clearText(false);
+			}
+		};
+		clearError();
+		startAlles.setDisable(false);
+		stopAlles.setDisable(true);
+		t.start();
 	}
 
 	/**
@@ -165,20 +203,6 @@ public class MainScreenController implements Initializable {
 		t.start();
 	}
 
-	public void StopGunvorInternal() {
-	}
-
-	/**
-	 * Stop the guvnor app
-	 */
-	public void StopGuvnor() {
-		Thread t = new Thread() {
-			public void run() {
-				StopGunvorInternal();
-			}
-		};
-		t.start();
-	}
 
 	public void StartGuvnorInternal() {
 	}
@@ -204,8 +228,9 @@ public class MainScreenController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		Image ajaxLoader = new Image("file:"+getClass().getResource("/ajax-loader.gif").getPath());
-		Image error = new Image("file:"+getClass().getResource("/error.png").getPath());
+		stopAlles.setDisable(true);
+		Image ajaxLoader = new Image("file:"+getClass().getResource("ajax-loader.gif").getPath());
+		Image error = new Image("file:"+getClass().getResource("error.png").getPath());
 		waitImage.setImage(ajaxLoader);
 		errorImage.setImage(error);
 		Workspace.Init();

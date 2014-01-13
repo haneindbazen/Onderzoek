@@ -89,32 +89,41 @@ public class EventPusher extends WebSocketServlet {
 
 		@Override
 		protected void onTextMessage(CharBuffer msg) throws IOException {
-			
+
 			String message = msg.toString();
 			System.out.println("client says: " + message.toString());
 			try {
-				Drools.Init(message.split("#")[1]);
+				if (message.split("#")[1] != null) {
+					Drools.Init(message.split("#")[1]);
+				} else {
+					MainScreenController
+							.setError("Please provide a valid Guvnor link");
+				}
 			} catch (Exception e1) {
-				// TODO Auto-generated catch block
+				MainScreenController
+						.setError("Please provide a valid Guvnor link");
 				e1.printStackTrace();
+				return;
 			}
-			String transcriptPath = Workspace.TranscriptsDir+"/"+MainScreenController.getTranscript();
-			ArrayList<String> lines = Transcript.Read(new File(transcriptPath).getPath());
+			String transcriptPath = Workspace.TranscriptsDir + "/"
+					+ MainScreenController.getTranscript();
+			ArrayList<String> lines = Transcript.Read(new File(transcriptPath)
+					.getPath());
 			for (String line : lines) {
 				System.out.println(line);
 				Drools.FireRules(new Event(line));
 				long delay;
-			    try { 
-			         delay = Integer.parseInt(MainScreenController.getDelay())*1000; 
-			    } catch(NumberFormatException e) { 
-			        delay = 2000; 
-			    }
-				 try {
-				 Thread.sleep(delay);
-				 } catch (InterruptedException e) {
-				 // TODO Auto-generated catch block
-				 e.printStackTrace();
-				 }
+				try {
+					delay = Integer.parseInt(MainScreenController.getDelay()) * 1000;
+				} catch (NumberFormatException e) {
+					delay = 2000;
+				}
+				try {
+					Thread.sleep(delay);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			Drools.Close();
 		}

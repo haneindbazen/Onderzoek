@@ -22,7 +22,7 @@ import com.han.simulator.utils.EventPusher;
 */
 public class Simulator {
 	
-	static String webappDirLocation = Simulator.class.getResource("/Simulator").getPath();
+	static String webappDirLocation = Simulator.class.getResource("Simulator").getPath();
     static Tomcat tomcat = new Tomcat();
 
 	/**
