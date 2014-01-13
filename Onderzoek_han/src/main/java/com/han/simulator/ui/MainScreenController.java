@@ -152,9 +152,9 @@ public class MainScreenController implements Initializable {
 		}
 		else{
 		clearError();
+		t.start();
 		startAlles.setDisable(true);
 		stopAlles.setDisable(false);
-		t.start();
 		}
 	}
 	
@@ -186,9 +186,9 @@ public class MainScreenController implements Initializable {
 			}
 		};
 		clearError();
+		t.start();
 		startAlles.setDisable(false);
 		stopAlles.setDisable(true);
-		t.start();
 	}
 
 	/**
