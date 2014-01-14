@@ -38,7 +38,7 @@ public class JustInMind {
 		System.out.println("---" + prototypesDir.getName());
 
 		homePrototypesDir = new File(JustInMind.class.getResource(
-				"/Simulator/interfaces").getPath()
+				"/com/han/simulator/servers/Simulator/interfaces").getPath()
 				+ "/" + prototypesDir.getName());
 		if (!homePrototypesDir.exists()) {
 			homePrototypesDir.mkdir();
