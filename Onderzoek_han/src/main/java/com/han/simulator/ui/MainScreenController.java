@@ -133,10 +133,10 @@ public class MainScreenController implements Initializable {
 					this.stop();
 				}
 				setText("starting guvnor app...");
-				Guvnor.Start();
+				//Guvnor.Start();
 				setText("starting simulator app...");
 				Simulator.Start();
-				Guvnor.Open();
+				//Guvnor.Open();
 				Simulator.Open();
 				setText("Everything started succefully!");
 				clearText(false);

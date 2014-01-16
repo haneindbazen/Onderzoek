@@ -10,20 +10,30 @@ import com.han.simulator.utils.EventPusher.EchoMessageInbound;
 * @author Armand Ndizigiye
 * @version 0.1
 */
-public class Event {
+public class Associatie {
 
-	public String message;
+	public String inhoud;
+	public String tag;
 
-	public Event(String message) {
-		this.message = message;
+	public Associatie(String message, String tag) {
+		this.inhoud = message;
+		this.tag = tag;
 	}
 
 	public String getMessage() {
-		return message;
+		return inhoud;
+	}
+
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
 	}
 
 	public void setMessage(String message) {
-		this.message = message;
+		this.inhoud = message;
 	}
 	
 	/**
@@ -33,7 +43,7 @@ public class Event {
 	 * @throws IOException
 	 */
 
-	public void PushEventToBrowser(Event e, String interfaceName)throws IOException {
+	public void PushEventToBrowser(Associatie e, String interfaceName)throws IOException {
 		for (EchoMessageInbound mi : EventPusher.clients) {
 			mi.sendMessage(e.getMessage()+"#"+interfaceName);
 		}
