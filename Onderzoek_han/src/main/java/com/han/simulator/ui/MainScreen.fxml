@@ -16,7 +16,7 @@
       <children>
         <Button fx:id="startAlles" layoutX="131.0" layoutY="179.0" mnemonicParsing="false" onMousePressed="#StartAlles" prefHeight="30.9609375" prefWidth="110.0" text="Start" />
         <Label fx:id="statusLabel" layoutX="290.0" layoutY="187.0" prefWidth="369.0" text="status label" visible="false" />
-        <Button id="startAlles" fx:id="stopAlles" layoutX="14.0" layoutY="179.0" mnemonicParsing="false" onMousePressed="#StartAlles" prefHeight="30.9609375" prefWidth="110.0" text="Stop" />
+        <Button id="startAlles" fx:id="stopAlles" layoutX="14.0" layoutY="179.0" mnemonicParsing="false" onMousePressed="#StopAlles" prefHeight="30.9609375" prefWidth="110.0" text="Stop" />
         <ImageView fx:id="waitImage" fitHeight="29.90234375" fitWidth="39.869791666666664" layoutX="246.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true" visible="false">
           <image>
             <Image url="@../../../../../content/ajax-loader.gif" />

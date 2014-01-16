@@ -32,7 +32,7 @@ public class EntryPoint extends Application {
 	        
 	        primaryStage.setTitle("FXML Welcome");
 	        primaryStage.setScene(scene);
-	        primaryStage.show();
+	        primaryStage.show();//
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
