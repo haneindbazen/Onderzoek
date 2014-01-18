@@ -6,6 +6,7 @@
 <head>
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script src="/simulator/default.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
@@ -50,6 +51,7 @@ margin: 10px 0px 10px 30px;
 		var meldingValue = melding.split("#")[0];
 		var screenSrc = "/simulator/interfaces/"+"<%=Workspace.prototypeName%>"+"/review/screens/"+screenName+".html";
 		$('#iframe').attr('src', screenSrc);
+		insertMeldingInfo(melding);
 	};
 	ws.onclose = function() {
 	};

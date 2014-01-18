@@ -6,10 +6,11 @@ import java.util.HashMap;
 import com.han.simulator.utils.EventPusher.EchoMessageInbound;
 
 /**
-* The Model for creating Rules in Guvnor
-* @author Armand Ndizigiye
-* @version 0.1
-*/
+ * The Model for creating Rules in Guvnor
+ * 
+ * @author Armand Ndizigiye
+ * @version 0.1
+ */
 public class Event {
 
 	public String message;
@@ -25,22 +26,24 @@ public class Event {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
+
 	/**
 	 * Push the event to the Browser
-	 * @param e - the occured event
-	 * @param interfaceName - the name of the interface for this event
+	 * 
+	 * @param e
+	 *            - the occured event
+	 * @param interfaceName
+	 *            - the name of the interface for this event
 	 * @throws IOException
 	 */
 
-	public void PushEventToBrowser(Event e, String interfaceName)throws IOException {
+	public void PushEventToBrowser(Event e, String interfaceName) {
 		for (EchoMessageInbound mi : EventPusher.clients) {
-			mi.sendMessage(e.getMessage()+"#"+interfaceName);
+			try {
+				mi.sendMessage(e.getMessage() + "#" + interfaceName);
+			} catch (IOException e1) {
+				System.out.println("client is no longer connected!");
+			}
 		}
-
-	}
-	
-	public void Test(HashMap<String,String> test){
-		
 	}
 }

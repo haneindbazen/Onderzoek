@@ -14,6 +14,7 @@ import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
 
 import com.han.simulator.utils.EventPusher;
+import com.han.simulator.utils.Workspace;
 
 /**
 * This class starts and stops the embedded Tomcat server
@@ -22,7 +23,7 @@ import com.han.simulator.utils.EventPusher;
 */
 public class Simulator {
 	
-	static String webappDirLocation = Simulator.class.getResource("Simulator").getPath();
+	static String webappDirLocation = Workspace.AppDir.getPath();
     static Tomcat tomcat = new Tomcat();
 
 	/**

@@ -30,6 +30,27 @@ public class EventPusher extends WebSocketServlet {
 	private static final long serialVersionUID = 1L;
 	private volatile int byteBufSize;
 	private volatile int charBufSize;
+	
+	public static String[] message = null;
+	
+	static Thread droolsThread = new Thread(new Runnable() {
+		@Override
+		public void run() {
+			String guvnorLink = "";
+			try {
+				guvnorLink = message[1];
+			} catch (ArrayIndexOutOfBoundsException e) {
+				guvnorLink = "";
+			}
+			try {
+				Drools.Start(guvnorLink);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	});
 
 	@Override
 	public void init() throws ServletException {
@@ -89,43 +110,24 @@ public class EventPusher extends WebSocketServlet {
 
 		@Override
 		protected void onTextMessage(CharBuffer msg) throws IOException {
+			message = msg.toString().trim().split("#");
+			
+			String command = message[0];
+			
+			if (command.equals("start")) {
+				droolsThread.start();
+			}
+			
+			else if(command.equals("pauze")) {
+				droolsThread.suspend();
+				System.out.println("pauzed");
+			}
 
-			String message = msg.toString();
-			System.out.println("client says: " + message.toString());
-			try {
-				if (message.split("#")[1] != null) {
-					Drools.Init(message.split("#")[1]);
-				} else {
-					MainScreenController
-							.setError("Please provide a valid Guvnor link");
-				}
-			} catch (Exception e1) {
-				MainScreenController
-						.setError("Please provide a valid Guvnor link");
-				e1.printStackTrace();
-				return;
+			else if (command.equals("resume")) {
+				droolsThread.resume();
+				System.out.println("resumed");
 			}
-			String transcriptPath = Workspace.TranscriptsDir + "/"
-					+ MainScreenController.getTranscript();
-			ArrayList<String> lines = Transcript.Read(new File(transcriptPath)
-					.getPath());
-			for (String line : lines) {
-				System.out.println(line);
-				Drools.FireRules(new Event(line));
-				long delay;
-				try {
-					delay = Integer.parseInt(MainScreenController.getDelay()) * 1000;
-				} catch (NumberFormatException e) {
-					delay = 2000;
-				}
-				try {
-					Thread.sleep(delay);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			Drools.Close();
+
 		}
 	}
 }

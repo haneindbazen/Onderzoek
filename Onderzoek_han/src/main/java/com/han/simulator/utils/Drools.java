@@ -2,6 +2,7 @@ package com.han.simulator.utils;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -30,6 +31,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
+
+import com.han.simulator.ui.MainScreenController;
 
 /**
 * This class is responsible for configuring and starting 
@@ -60,6 +63,48 @@ public class Drools {
 		logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
 	}
 
+	/**
+	 * Start the Drools Engine based on Rules
+	 * @see FireRules
+	 * @param guvnorLink
+	 * @throws IOException
+	 */
+	public  static void Start(String guvnorLink) throws IOException{
+		try {
+			if (guvnorLink != null && !guvnorLink.equals("")) {
+				Drools.Init(guvnorLink);
+			} else {
+				MainScreenController
+						.setError("Please provide a valid Guvnor link");
+			}
+		} catch (Exception e1) {
+			MainScreenController
+					.setError("Please provide a valid Guvnor link");
+			e1.printStackTrace();
+			return;
+		}
+		String transcriptPath = Workspace.TranscriptsDir + "/"
+				+ MainScreenController.getTranscript();
+		ArrayList<String> lines = Transcript.Read(new File(transcriptPath)
+				.getPath());
+		for (String line : lines) {
+			System.out.println(line);
+			Drools.FireRules(new Event(line));
+			long delay;
+			try {
+				delay = Integer.parseInt(MainScreenController.getDelay()) * 1000;
+			} catch (NumberFormatException e) {
+				delay = 2000;
+			}
+			try {
+				Thread.sleep(delay);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		Drools.Close();
+	}
 	/**
 	 * This fires all the Rules, each event at a time
 	 * using a given interval
@@ -121,14 +166,14 @@ public class Drools {
     	
     	DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-		Document doc = docBuilder.parse(Drools.class.getResource("/guvnor.xml").getPath());
+		Document doc = docBuilder.parse(Workspace.SimulatorDir+"/guvnor.xml");
 		Node resource = doc.getElementsByTagName("resource").item(0);
 		NamedNodeMap attr = resource.getAttributes();
 		attr.getNamedItem("source").setNodeValue(URL);
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer = transformerFactory.newTransformer();
 		DOMSource src = new DOMSource(doc);
-		StreamResult result = new StreamResult(new File(Drools.class.getResource("/guvnor.xml").getPath()));
+		StreamResult result = new StreamResult(Workspace.SimulatorDir+"/guvnor.xml");
 		transformer.transform(src, result);
     }
 

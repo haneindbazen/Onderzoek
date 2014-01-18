@@ -20,9 +20,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
-import com.han.simulator.servers.Guvnor;
-import com.han.simulator.servers.Simulator;
-import com.han.simulator.servers.Simulator;
+import com.han.simulator.servers.*;
 import com.han.simulator.utils.Workspace;
 
 /**
@@ -38,6 +36,8 @@ public class MainScreenController implements Initializable {
 	@FXML
 	private Button stopAlles;
 	@FXML
+	private Button installAlles;
+	@FXML
 	private ImageView waitImage;
 	@FXML
 	private ImageView errorImage;
@@ -50,6 +50,8 @@ public class MainScreenController implements Initializable {
 	@FXML
 	private static Pane errorPanel;
 	@FXML
+	private static Pane installPanel;
+	@FXML
 	private static ChoiceBox<String> transcriptChooser;
 	@FXML
 	private static ChoiceBox<String> prototypeChooser;
@@ -60,7 +62,7 @@ public class MainScreenController implements Initializable {
 		String chosenTranscript = transcriptChooser.getValue();
 		return chosenTranscript;
 	}
-	
+
 	public static String getDelay() {
 		String delayValue = delay.getText();
 		return delayValue;
@@ -80,7 +82,7 @@ public class MainScreenController implements Initializable {
 			}
 		});
 	}
-	
+
 	public static void setError(final String text) {
 		Platform.runLater(new Runnable() {
 			public void run() {
@@ -89,7 +91,7 @@ public class MainScreenController implements Initializable {
 			}
 		});
 	}
-	
+
 	public void clearError() {
 		Platform.runLater(new Runnable() {
 			public void run() {
@@ -102,8 +104,8 @@ public class MainScreenController implements Initializable {
 		Platform.runLater(new Runnable() {
 			public void run() {
 				waitImage.setVisible(false);
-				if(clearAlsoStatus){
-				statusLabel.setText("");
+				if (clearAlsoStatus) {
+					statusLabel.setText("");
 				}
 			}
 		});
@@ -118,46 +120,36 @@ public class MainScreenController implements Initializable {
 			public void run() {
 				setText("configuring workspace directory...");
 				try {
-				Workspace.InitJustInMind();
-				}
-				catch(Exception e){
+					Workspace.InitJustInMind();
+				} catch (Exception e) {
 					setError("Initializing interfaces failed, provide a valid prototype directory");
 					clearText(true);
 					this.stop();
 				}
-				setText("initializing guvnor...");
-				try {
-					Workspace.InitGuvnor();
-				} catch (ZipException e) {
-					setError("Initializing Guvnor failed");
-					this.stop();
-				}
 				setText("starting guvnor app...");
-				//Guvnor.Start();
+				Guvnor.Start();
 				setText("starting simulator app...");
 				Simulator.Start();
-				//Guvnor.Open();
-				Simulator.Open();
+				Guvnor.Open();
+				// Simulator.Open();
 				setText("Everything started succefully!");
 				clearText(false);
 			}
 		};
-		
-		if(getTranscript() == null || getPrototype() == null){
-			
+
+		if (getTranscript() == null || getPrototype() == null) {
+
 			setError("Please choose a transcript file and a prototype");
-		}
-		else if(!getTranscript().endsWith(".txt")){
+		} else if (!getTranscript().endsWith(".txt")) {
 			setError("Only txt transcripts are allowed");
-		}
-		else{
-		clearError();
-		t.start();
-		startAlles.setDisable(true);
-		stopAlles.setDisable(false);
+		} else {
+			clearError();
+			t.start();
+			startAlles.setDisable(true);
+			stopAlles.setDisable(false);
 		}
 	}
-	
+
 	/**
 	 * Stops everything
 	 */
@@ -167,17 +159,16 @@ public class MainScreenController implements Initializable {
 			public void run() {
 				setText("stopping guvnor...");
 				try {
-				Guvnor.Stop();
-				}
-				catch(Exception e){
+					// Guvnor.Stop();
+				} catch (Exception e) {
 					setError("Stopping guvnor failed");
 					clearText(true);
 					this.stop();
 				}
 				setText("stopping simulator server...");
 				try {
-					Workspace.InitGuvnor();
-				} catch (ZipException e) {
+					Simulator.Stop();
+				} catch (Exception e) {
 					setError("Stopping simulator server failed");
 					this.stop();
 				}
@@ -192,6 +183,21 @@ public class MainScreenController implements Initializable {
 	}
 
 	/**
+	 * Install for the first time use
+	 */
+
+	public void InstallAll() {
+		Thread t = new Thread() {
+			public void run() {
+				setText("install program on disk please wait...");
+				Workspace.Install();
+				clearText(false);
+			}
+		};
+		t.start();
+	}
+
+	/**
 	 * Start guvnor in a new thread
 	 */
 	public void StartGuvnor() {
@@ -202,7 +208,6 @@ public class MainScreenController implements Initializable {
 		};
 		t.start();
 	}
-
 
 	public void StartGuvnorInternal() {
 	}
@@ -221,29 +226,33 @@ public class MainScreenController implements Initializable {
 
 	public void StartSimulatorInternal() {
 	}
-	
-	public void Test(){
-		setText("Trancript:-"+getTranscript()+"-Prototype:-"+getPrototype()+"-"+"Delay:-"+getDelay()+"-");
-	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		if (Workspace.isInstalled()) {
+			installPanel.setVisible(true);
+		} else {
+			installPanel.setVisible(false);
+			stopAlles.setDisable(true);
+			startAlles.setDisable(true);
+		}
 		stopAlles.setDisable(true);
-		Image ajaxLoader = new Image("file:"+getClass().getResource("ajax-loader.gif").getPath());
-		Image error = new Image("file:"+getClass().getResource("error.png").getPath());
+		Image ajaxLoader = new Image(getClass().getResourceAsStream(
+				"ajax-loader.gif"));
+		Image error = new Image(getClass().getResourceAsStream("error.png"));
 		waitImage.setImage(ajaxLoader);
 		errorImage.setImage(error);
-		Workspace.Init();
-		projectDir.setText("Project directory : " + Workspace.SimulatorDir.getPath());
-		transcriptChooser.getItems().clear();
-		prototypeChooser.getItems().clear();
-		for (String transcriptName : Workspace.listTranscripts()) {
-			transcriptChooser.getItems().add(transcriptName);
-		}
-
-		for (String prototypeName : Workspace.listPrototypes()) {
-			prototypeChooser.getItems().add(prototypeName);
-		}
+//		projectDir.setText("Project directory : "
+//				+ Workspace.SimulatorDir.getPath());
+//		transcriptChooser.getItems().clear();
+//		prototypeChooser.getItems().clear();
+//		for (String transcriptName : Workspace.listTranscripts()) {
+//			transcriptChooser.getItems().add(transcriptName);
+//		}
+//
+//		for (String prototypeName : Workspace.listPrototypes()) {
+//			prototypeChooser.getItems().add(prototypeName);
+//		}
 
 	}
 }

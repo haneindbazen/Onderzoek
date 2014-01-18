@@ -10,13 +10,12 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.web.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="279.0" prefWidth="659.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.han.simulator.ui.MainScreenController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="659.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="com.han.simulator.ui.MainScreenController">
   <children>
-    <Pane blendMode="DARKEN" layoutX="0.0" layoutY="0.0" opacity="1.0" prefHeight="279.0" prefWidth="659.0">
+    <Pane blendMode="DARKEN" layoutX="0.0" layoutY="0.0" opacity="1.0" prefHeight="300.0" prefWidth="659.0">
       <children>
         <Button fx:id="startAlles" layoutX="131.0" layoutY="179.0" mnemonicParsing="false" onMousePressed="#StartAlles" prefHeight="30.9609375" prefWidth="110.0" text="Start" />
         <Label fx:id="statusLabel" layoutX="290.0" layoutY="187.0" prefWidth="369.0" text="status label" visible="false" />
-        <Button id="startAlles" fx:id="stopAlles" layoutX="14.0" layoutY="179.0" mnemonicParsing="false" onMousePressed="#StopAlles" prefHeight="30.9609375" prefWidth="110.0" text="Stop" />
         <ImageView fx:id="waitImage" fitHeight="29.90234375" fitWidth="39.869791666666664" layoutX="246.0" layoutY="180.0" pickOnBounds="true" preserveRatio="true" visible="false">
           <image>
             <Image url="@../../../../../content/ajax-loader.gif" />
@@ -27,6 +26,7 @@
             <FXCollections fx:factory="observableArrayList" />
           </items>
         </ChoiceBox>
+        <Button id="startAlles" fx:id="stopAlles" layoutX="14.0" layoutY="179.0" mnemonicParsing="false" onMousePressed="#StopAlles" prefHeight="30.9609375" prefWidth="110.0" text="Stop" />
         <Label layoutX="14.0" layoutY="94.0" text="Choose Transcript" />
         <ChoiceBox fx:id="prototypeChooser" layoutX="124.0" layoutY="133.0">
           <items>
@@ -57,6 +57,12 @@
             <Font size="15.0" />
           </font>
         </Label>
+        <Pane id="installPane" fx:id="installPanel" layoutX="14.0" layoutY="255.0" prefHeight="30.9609375" prefWidth="515.0">
+          <children>
+            <Button layoutX="0.0" layoutY="-1.0" mnemonicParsing="false" onMousePressed="#InstallAll" prefHeight="30.9609375" prefWidth="73.0" text="Install" />
+            <Label layoutX="88.0" layoutY="8.0" prefWidth="305.0" text="For the first time use........" />
+          </children>
+        </Pane>
       </children>
     </Pane>
   </children>
