@@ -107,4 +107,8 @@ public class JustInMind {
 			}
 		}
 	}
+	
+	public static void RemoveScripts(){
+		//TODO implement function
+	}
 }
