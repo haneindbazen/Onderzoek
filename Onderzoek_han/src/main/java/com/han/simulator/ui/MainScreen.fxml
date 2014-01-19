@@ -57,10 +57,9 @@
             <Font size="15.0" />
           </font>
         </Label>
-        <Pane id="installPane" fx:id="installPanel" layoutX="14.0" layoutY="255.0" prefHeight="30.9609375" prefWidth="515.0">
+        <Pane id="installPane" fx:id="installPanel" layoutX="14.0" layoutY="254.0" prefHeight="30.9609375" prefWidth="515.0">
           <children>
             <Button layoutX="0.0" layoutY="-1.0" mnemonicParsing="false" onMousePressed="#InstallAll" prefHeight="30.9609375" prefWidth="73.0" text="Install" />
-            <Label layoutX="88.0" layoutY="8.0" prefWidth="305.0" text="For the first time use........" />
           </children>
         </Pane>
       </children>

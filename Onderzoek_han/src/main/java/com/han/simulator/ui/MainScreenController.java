@@ -57,6 +57,29 @@ public class MainScreenController implements Initializable {
 	private static ChoiceBox<String> prototypeChooser;
 	@FXML
 	public static TextField delay;
+	
+	public Thread startThread = new Thread() {
+		@SuppressWarnings("deprecation")
+		public void run() {
+			setText("configuring workspace directory...");
+			try {
+				Workspace.InitJustInMind();
+			} catch (Exception e) {
+				setError("Initializing interfaces failed, provide a valid prototype directory");
+				e.printStackTrace();
+				clearText(true);
+				this.stop();
+			}
+			setText("starting guvnor app...");
+			Guvnor.Start();
+			setText("starting simulator app...");
+			Simulator.Start();
+			Guvnor.Open();
+			Simulator.Open();
+			setText("Everything started succefully!");
+			clearText(false);
+		}
+	};
 
 	public static String getTranscript() {
 		String chosenTranscript = transcriptChooser.getValue();
@@ -111,31 +134,14 @@ public class MainScreenController implements Initializable {
 		});
 	}
 
+	public void test() {
+		afterInstall();
+	}
+
 	/**
 	 * Starts everything
 	 */
 	public void StartAlles() {
-		Thread t = new Thread() {
-			@SuppressWarnings("deprecation")
-			public void run() {
-				setText("configuring workspace directory...");
-				try {
-					Workspace.InitJustInMind();
-				} catch (Exception e) {
-					setError("Initializing interfaces failed, provide a valid prototype directory");
-					clearText(true);
-					this.stop();
-				}
-				setText("starting guvnor app...");
-				Guvnor.Start();
-				setText("starting simulator app...");
-				Simulator.Start();
-				Guvnor.Open();
-				// Simulator.Open();
-				setText("Everything started succefully!");
-				clearText(false);
-			}
-		};
 
 		if (getTranscript() == null || getPrototype() == null) {
 
@@ -144,7 +150,7 @@ public class MainScreenController implements Initializable {
 			setError("Only txt transcripts are allowed");
 		} else {
 			clearError();
-			t.start();
+			startThread.start();
 			startAlles.setDisable(true);
 			stopAlles.setDisable(false);
 		}
@@ -159,7 +165,7 @@ public class MainScreenController implements Initializable {
 			public void run() {
 				setText("stopping guvnor...");
 				try {
-					// Guvnor.Stop();
+					Guvnor.Stop();
 				} catch (Exception e) {
 					setError("Stopping guvnor failed");
 					clearText(true);
@@ -191,48 +197,46 @@ public class MainScreenController implements Initializable {
 			public void run() {
 				setText("install program on disk please wait...");
 				Workspace.Install();
+				setText("Program is now installed, press start to start!");
 				clearText(false);
+				afterInstall();
 			}
 		};
 		t.start();
 	}
 
 	/**
-	 * Start guvnor in a new thread
+	 * Show options
 	 */
-	public void StartGuvnor() {
-		Thread t = new Thread() {
+
+	public void afterInstall() {
+		Platform.runLater(new Runnable() {
 			public void run() {
-				StartGuvnorInternal();
+				projectDir.setText("Project directory : "
+						+ Workspace.SimulatorDir.getPath());
+				transcriptChooser.getItems().clear();
+				prototypeChooser.getItems().clear();
+				for (String transcriptName : Workspace.listTranscripts()) {
+					transcriptChooser.getItems().add(transcriptName);
+				}
+
+				for (String prototypeName : Workspace.listPrototypes()) {
+					prototypeChooser.getItems().add(prototypeName);
+				}
+				
+				installPanel.setVisible(false);
+				startAlles.setDisable(false);
 			}
-		};
-		t.start();
-	}
-
-	public void StartGuvnorInternal() {
-	}
-
-	/**
-	 * Start the simulator in a new thread
-	 */
-	public void StartSimulator() {
-		Thread t = new Thread() {
-			public void run() {
-				StartSimulatorInternal();
-			}
-		};
-		t.start();
-	}
-
-	public void StartSimulatorInternal() {
+		});
 	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		if (Workspace.isInstalled()) {
-			installPanel.setVisible(true);
-		} else {
 			installPanel.setVisible(false);
+			afterInstall();
+		} else {
+			installPanel.setVisible(true);
 			stopAlles.setDisable(true);
 			startAlles.setDisable(true);
 		}
@@ -242,17 +246,6 @@ public class MainScreenController implements Initializable {
 		Image error = new Image(getClass().getResourceAsStream("error.png"));
 		waitImage.setImage(ajaxLoader);
 		errorImage.setImage(error);
-//		projectDir.setText("Project directory : "
-//				+ Workspace.SimulatorDir.getPath());
-//		transcriptChooser.getItems().clear();
-//		prototypeChooser.getItems().clear();
-//		for (String transcriptName : Workspace.listTranscripts()) {
-//			transcriptChooser.getItems().add(transcriptName);
-//		}
-//
-//		for (String prototypeName : Workspace.listPrototypes()) {
-//			prototypeChooser.getItems().add(prototypeName);
-//		}
 
 	}
 }

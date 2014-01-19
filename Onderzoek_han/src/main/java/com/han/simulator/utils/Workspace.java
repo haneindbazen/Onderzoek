@@ -45,7 +45,7 @@ public class Workspace {
 		TranscriptsDir = new File(SimulatorDir.getPath() + "/Transcript");
 		InterfacesDir = new File(SimulatorDir.getPath() + "/Interfaces");
 		AppDir  = new File(SimulatorDir.getPath() + "/App");
-		if(SimulatorDir!=null && TomcatDir!=null && TranscriptsDir!=null && InterfacesDir!=null && AppDir !=null){
+		if(SimulatorDir.exists() && TomcatDir.exists() && AppDir .exists()){
 			return true;
 		}
 		return false;
@@ -55,121 +55,81 @@ public class Workspace {
 	 * 
 	 */
 	public static void Install(){
-		try {
 			SimulatorDir = new File(userDir + "/" + "com.han.simulator");
-		} catch (NullPointerException | IllegalArgumentException e) {
-			SimulatorDir.mkdir();
-		}
-		//install app dir and temp interfaces dir
-		AppDir = new File(SimulatorDir.getPath() + "/App");
-		TempInterfacesDir = new File(SimulatorDir.getPath() + "/App/interfaces");
-		if (!AppDir.exists()) {
-			AppDir.mkdir();
-			if(!TempInterfacesDir.exists()){
+			AppDir = new File(SimulatorDir.getPath() + "/App");
+			TomcatDir = new File(SimulatorDir.getPath() + "/Tomcat");
+			TranscriptsDir = new File(SimulatorDir.getPath() + "/Transcript");
+			InterfacesDir = new File(SimulatorDir.getPath() + "/Interfaces");
+			TempInterfacesDir = new File(SimulatorDir.getPath() + "/App/interfaces");
+			if (!SimulatorDir.exists()) {
+				SimulatorDir.mkdir();
+			}
+			if (!AppDir.exists()) {
+				AppDir.mkdir();
+			}
+			if (!TomcatDir.exists()) {
+				TomcatDir.mkdir();
+			}
+			if (!TranscriptsDir.exists()) {
+				TranscriptsDir.mkdir();
+			}
+			if (!InterfacesDir.exists()) {
+				InterfacesDir.mkdir();
+			}
+			if (!TempInterfacesDir.exists()) {
 				TempInterfacesDir.mkdir();
 			}
-			InputStream IndexSource = Workspace.class.getResourceAsStream("com/han/simulator/servers/App/index.jsp");
-			InputStream WebSocketSource = Workspace.class.getResourceAsStream("com/han/simulator/servers/App/websocket.jsp");
-			InputStream JsSource = Workspace.class.getResourceAsStream("com/han/simulator/servers/App/default.js");
-			InputStream placeHolderSource = Workspace.class.getResourceAsStream("com/han/simulator/servers/App/interfaces/placeholder.txt");
+			
+		//install app dir and temp interfaces dir
+			InputStream IndexSource = Workspace.class.getResourceAsStream("/com/han/simulator/servers/App/index.jsp");
+			InputStream WebSocketSource = Workspace.class.getResourceAsStream("/com/han/simulator/servers/App/websocket.jsp");
+			InputStream JsSource = Workspace.class.getResourceAsStream("/com/han/simulator/servers/App/default.js");
+			InputStream placeHolderSource = Workspace.class.getResourceAsStream("/com/han/simulator/servers/App/interfaces/placeholder");
 			CopyFileToUserDir(IndexSource,AppDir.getPath()+"/index.jsp");
 			CopyFileToUserDir(WebSocketSource,AppDir.getPath()+"/websocket.jsp");
 			CopyFileToUserDir(JsSource,AppDir.getPath()+"/default.js");
 			CopyFileToUserDir(placeHolderSource,TempInterfacesDir.getPath()+"/placeholder.txt");
-		}
+			
 		//install guvnor config file
-		InputStream configSource = Workspace.class.getResourceAsStream("/guvnor.xml");
+		InputStream configSource = Workspace.class.getResourceAsStream("/com/han/simulator/utils/guvnor.xml");
 		CopyFileToUserDir(configSource,SimulatorDir+ "/guvnor.xml");
-		
-		
-		TomcatDir = new File(SimulatorDir.getPath() + "/Tomcat");
-		if (!TomcatDir.exists()) {
-			TomcatDir.mkdir();
-			//install tomcat and guvnor
-			InputStream transcriptSource = Workspace.class.getResourceAsStream("Tomcat.zip");
-			CopyFileToUserDir(transcriptSource, TomcatDir.getPath()+ "/Tomcat.zip");
-			ZipFile zipFile;
-			try {
-				zipFile = new ZipFile(TomcatDir+"/Tomcat.zip");
-				zipFile.extractAll(TomcatDir.getPath());
-			} catch (ZipException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		TranscriptsDir = new File(SimulatorDir.getPath() + "/Transcript");
-		if (!TranscriptsDir.exists()) {
-			TranscriptsDir.mkdir();
-			//install sample transcript
-			InputStream transcriptSource = Workspace.class.getResourceAsStream("Meldingen.zip");
-			CopyFileToUserDir(transcriptSource, TranscriptsDir.getPath()+ "/Meldingen.zip");
-			ZipFile zipFile;
-			try {
-				zipFile = new ZipFile(TranscriptsDir.getPath()+ "/Meldingen.zip");
-				zipFile.extractAll(TranscriptsDir.getPath());
-			} catch (ZipException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 
-		InterfacesDir = new File(SimulatorDir.getPath() + "/Interfaces");
-		if (!InterfacesDir.exists()) {
-			InterfacesDir.mkdir();
+			//install tomcat and guvnor
+			InputStream tomcatSource = Workspace.class.getResourceAsStream("/com/han/simulator/utils/Tomcat.zip");
+			CopyFileToUserDir(tomcatSource, TomcatDir.getPath()+ "/Tomcat.zip");
+			ZipFile tomcatzip;
+			try {
+				tomcatzip = new ZipFile(TomcatDir+"/Tomcat.zip");
+				tomcatzip.extractAll(TomcatDir.getPath());
+			} catch (ZipException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			//install sample transcript
+			InputStream transcriptSource = Workspace.class.getResourceAsStream("/com/han/simulator/utils/Meldingen.zip");
+			CopyFileToUserDir(transcriptSource, TranscriptsDir.getPath()+ "/Meldingen.zip");
+			ZipFile transcriptZip;
+			try {
+				transcriptZip= new ZipFile(TranscriptsDir.getPath()+ "/Meldingen.zip");
+				transcriptZip.extractAll(TranscriptsDir.getPath());
+			} catch (ZipException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 			//install sample prototype
-			InputStream prototypeSource = Workspace.class.getResourceAsStream("Prototype.zip");
+			InputStream prototypeSource = Workspace.class.getResourceAsStream("/com/han/simulator/utils/Prototype.zip");
 			CopyFileToUserDir(prototypeSource, InterfacesDir+"/Prototype.zip");
-			 ZipFile zipFile;
+			 ZipFile prototypeZip;
 			 try {
-			 zipFile = new ZipFile(InterfacesDir.getPath()+"/Prototype.zip");
-			 zipFile.extractAll(InterfacesDir.getPath());
+				 prototypeZip = new ZipFile(InterfacesDir.getPath()+"/Prototype.zip");
+				 prototypeZip.extractAll(InterfacesDir.getPath());
 			 } catch (ZipException e) {
 			 // TODO Auto-generated catch block
 			 e.printStackTrace();
 			 }
-		}
-		
-		
 	}
-	/**
-	 * Initialize the simulator working space by creating needed directories
-	 */
-//	public static void Init() {
-//
-//		try {
-//			SimulatorDir = new File(userDir + "/" + "com.han.simulator");
-//		} catch (NullPointerException | IllegalArgumentException e) {
-//			SimulatorDir.mkdir();
-//		}
-//
-//		TranscriptsDir = new File(SimulatorDir.getPath() + "/Transcript");
-//		if (!TranscriptsDir.exists()) {
-//			TranscriptsDir.mkdir();
-//			ZipFile zipFile;
-//			try {
-//				zipFile = new ZipFile(TranscriptsDir.getPath()+ "/Meldingen.zip");
-//				zipFile.extractAll(TranscriptsDir.getPath());
-//			} catch (ZipException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-//
-//		InterfacesDir = new File(SimulatorDir.getPath() + "/Interfaces");
-//		if (!InterfacesDir.exists()) {
-//			InterfacesDir.mkdir();
-//			/* Sample prototype */
-//			 ZipFile zipFile;
-//			 try {
-//			 zipFile = new ZipFile(InterfacesDir.getPath()+"/Prototype.zip");
-//			 zipFile.extractAll(InterfacesDir.getPath());
-//			 } catch (ZipException e) {
-//			 // TODO Auto-generated catch block
-//			 e.printStackTrace();
-//			 }
-//		}
-//	}
 
 	public static void InitJustInMind() {
 		JustInMind.CopyPrototype(InterfacesDir + "/"
@@ -183,9 +143,9 @@ public class Workspace {
 		
 		try {
 			// write the inputStream to a FileOutputStream
-			FileOutputStream outputStream = new FileOutputStream(new File(
-					destination));
-
+			File destFile = new File(destination);
+			if(!destFile.exists()) destFile.createNewFile();
+			FileOutputStream outputStream = new FileOutputStream(destFile);
 			int read = 0;
 			byte[] bytes = new byte[1024];
 
@@ -193,7 +153,7 @@ public class Workspace {
 				outputStream.write(bytes, 0, read);
 			}
 			outputStream.close();
-			System.out.println("Done-------------------!");
+			System.out.println("Written to: "+destFile.getPath());
 
 		} catch (IOException e) {
 			e.printStackTrace();
