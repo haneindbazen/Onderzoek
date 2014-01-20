@@ -111,14 +111,10 @@ public class MainScreenController implements Initializable {
 		});
 	}
 
-	public void test() {
-		afterInstall();
-	}
-
 	/**
 	 * Starts everything
 	 */
-	public void StartAlles() {Thread startThread = new Thread() {
+	public void StartAll() {Thread startThread = new Thread() {
 		@SuppressWarnings("deprecation")
 		public void run() {
 			stopAlles.setDisable(true);
@@ -135,10 +131,10 @@ public class MainScreenController implements Initializable {
 				return;
 			}
 			setText("starting guvnor app...");
-			//Guvnor.Start();
+			Guvnor.Start();
 			setText("starting simulator app...");
 			Simulator.Start();
-			//Guvnor.Open();
+			Guvnor.Open();
 			Simulator.Open();
 			setText("Everything started succefully!");
 			clearText(false);
@@ -160,7 +156,7 @@ public class MainScreenController implements Initializable {
 	/**
 	 * Stops everything
 	 */
-	public void StopAlles() {
+	public void StopAll() {
 		Thread stopThread = new Thread() {
 			@SuppressWarnings("deprecation")
 			public void run() {

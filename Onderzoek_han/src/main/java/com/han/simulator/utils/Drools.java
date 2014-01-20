@@ -95,7 +95,7 @@ public class Drools {
 			try {
 				delay = Integer.parseInt(MainScreenController.getDelay()) * 1000;
 			} catch (NumberFormatException e) {
-				delay = 2000;
+				delay = 5000;
 			}
 			try {
 				Thread.sleep(delay);

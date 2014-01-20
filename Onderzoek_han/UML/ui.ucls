@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.4" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
-  <package id="1" language="java" name="com.han.simulator.servers" project="Onderzoek_han" 
-    file="/Onderzoek_han/src/main/java/com/han/simulator/servers" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="260" width="599" x="63" y="23"/>    
+  <package id="1" language="java" name="com.han.simulator.ui" project="Onderzoek_han" 
+    file="/Onderzoek_han/src/main/java/com/han/simulator/ui" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="624" width="444" x="30" y="35"/>    
     <display autosize="false" stereotype="true" accessors="true"/>  
   </package>  
-  <class id="2" language="java" name="com.han.simulator.servers.Guvnor" project="Onderzoek_han" 
-    file="/Onderzoek_han/src/main/java/com/han/simulator/servers/Guvnor.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="171" width="156" x="85" y="89"/>    
-    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+  <class id="2" language="java" name="com.han.simulator.ui.EntryPoint" project="Onderzoek_han" 
+    file="/Onderzoek_han/src/main/java/com/han/simulator/ui/EntryPoint.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="147" y="163"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="com.han.simulator.servers.Simulator" project="Onderzoek_han" 
-    file="/Onderzoek_han/src/main/java/com/han/simulator/servers/Simulator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="171" width="346" x="288" y="87"/>    
-    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+  <class id="3" language="java" name="com.han.simulator.ui.MainScreenController" project="Onderzoek_han" 
+    file="/Onderzoek_han/src/main/java/com/han/simulator/ui/MainScreenController.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="349" y="355"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    

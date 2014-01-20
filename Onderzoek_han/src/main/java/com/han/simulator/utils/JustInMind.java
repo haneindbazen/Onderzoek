@@ -37,7 +37,8 @@ public class JustInMind {
 		File prototypesDir = new File(path);
 		System.out.println("---" + prototypesDir.getName());
 
-		homePrototypesDir = new File(Workspace.AppDir.getPath()+"/interfaces/"+ prototypesDir.getName());
+		homePrototypesDir = new File(Workspace.AppDir.getPath()
+				+ "/interfaces/" + prototypesDir.getName());
 		if (!homePrototypesDir.exists()) {
 			homePrototypesDir.mkdir();
 		}
@@ -78,6 +79,8 @@ public class JustInMind {
 			TagNode[] cssLinks = node.getElementsByAttValue("rel",
 					"stylesheet", true, true);
 
+			TagNode[] scripts = node.getElementsByName("script", true);
+			RemoveScripts(scripts);
 			for (TagNode cssLink : cssLinks) {
 				String link = cssLink.getAttributeByName("href");
 				link = link.replace("./", "/simulator/interfaces/Prototype1/");
@@ -107,8 +110,10 @@ public class JustInMind {
 			}
 		}
 	}
-	
-	public static void RemoveScripts(){
-		//TODO implement function
+
+	public static void RemoveScripts(TagNode[] scripts) {
+		for (TagNode script : scripts) {
+			script.removeFromTree();
+		}
 	}
 }
