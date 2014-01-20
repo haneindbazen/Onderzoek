@@ -113,6 +113,7 @@ public class Workspace {
 			try {
 				transcriptZip= new ZipFile(TranscriptsDir.getPath()+ "/Meldingen.zip");
 				transcriptZip.extractAll(TranscriptsDir.getPath());
+				new File(TranscriptsDir.getPath()+ "/Meldingen.zip").delete();
 			} catch (ZipException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -125,6 +126,7 @@ public class Workspace {
 			 try {
 				 prototypeZip = new ZipFile(InterfacesDir.getPath()+"/Prototype.zip");
 				 prototypeZip.extractAll(InterfacesDir.getPath());
+				 new File(InterfacesDir.getPath()+"/Prototype.zip").delete();
 			 } catch (ZipException e) {
 			 // TODO Auto-generated catch block
 			 e.printStackTrace();
