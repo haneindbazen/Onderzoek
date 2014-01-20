@@ -43,6 +43,8 @@ public class Guvnor {
 	public static void Stop() {
 		try {
 			bootstrap.stopServer();
+			bootstrap.stop();
+			bootstrap.destroy();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

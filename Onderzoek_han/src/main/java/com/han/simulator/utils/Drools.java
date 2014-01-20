@@ -76,6 +76,7 @@ public class Drools {
 			} else {
 				MainScreenController
 						.setError("Please provide a valid Guvnor link");
+				return;
 			}
 		} catch (Exception e1) {
 			MainScreenController
@@ -135,7 +136,7 @@ public class Drools {
         KnowledgeAgentConfiguration kaconf = KnowledgeAgentFactory.newKnowledgeAgentConfiguration();
         kaconf.setProperty( "drools.agent.scanDirectories", "false" );
         KnowledgeAgent kagent = KnowledgeAgentFactory.newKnowledgeAgent( "test agent", kaconf );
-        kagent.applyChangeSet( ResourceFactory.newClassPathResource("guvnor.xml"));
+        kagent.applyChangeSet(ResourceFactory.newFileResource(new File(Workspace.SimulatorDir+"/guvnor.xml")));
         return kagent.getKnowledgeBase();
     }
     

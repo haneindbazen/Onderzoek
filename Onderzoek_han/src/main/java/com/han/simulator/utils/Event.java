@@ -41,8 +41,9 @@ public class Event {
 		for (EchoMessageInbound mi : EventPusher.clients) {
 			try {
 				mi.sendMessage(e.getMessage() + "#" + interfaceName);
+				System.out.println("message send");
 			} catch (IOException e1) {
-				System.out.println("client is no longer connected!");
+				EventPusher.clients.remove(mi);
 			}
 		}
 	}

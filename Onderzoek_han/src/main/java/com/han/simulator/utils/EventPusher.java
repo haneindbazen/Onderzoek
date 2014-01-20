@@ -30,27 +30,6 @@ public class EventPusher extends WebSocketServlet {
 	private static final long serialVersionUID = 1L;
 	private volatile int byteBufSize;
 	private volatile int charBufSize;
-	
-	public static String[] message = null;
-	
-	static Thread droolsThread = new Thread(new Runnable() {
-		@Override
-		public void run() {
-			String guvnorLink = "";
-			try {
-				guvnorLink = message[1];
-			} catch (ArrayIndexOutOfBoundsException e) {
-				guvnorLink = "";
-			}
-			try {
-				Drools.Start(guvnorLink);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-	});
 
 	@Override
 	public void init() throws ServletException {
@@ -110,24 +89,21 @@ public class EventPusher extends WebSocketServlet {
 
 		@Override
 		protected void onTextMessage(CharBuffer msg) throws IOException {
-			message = msg.toString().trim().split("#");
 			
+			String[] message = msg.toString().trim().split("#");
+			String guvnorLink = "";
 			String command = message[0];
-			
-			if (command.equals("start")) {
-				droolsThread.start();
+			try {
+				guvnorLink = message[1];
+			} catch (ArrayIndexOutOfBoundsException e) {
+				guvnorLink = "";
 			}
-			
-			else if(command.equals("pauze")) {
-				droolsThread.suspend();
-				System.out.println("pauzed");
+			try {
+				Drools.Start(guvnorLink);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
-			else if (command.equals("resume")) {
-				droolsThread.resume();
-				System.out.println("resumed");
-			}
-
 		}
 	}
 }

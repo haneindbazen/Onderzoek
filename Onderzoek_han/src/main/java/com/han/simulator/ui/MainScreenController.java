@@ -118,40 +118,42 @@ public class MainScreenController implements Initializable {
 	/**
 	 * Starts everything
 	 */
-	public void StartAlles() {
+	public void StartAlles() {Thread startThread = new Thread() {
+		@SuppressWarnings("deprecation")
+		public void run() {
+			stopAlles.setDisable(true);
+			startAlles.setDisable(true);
+			setText("configuring workspace directory...");
+			try {
+				Workspace.InitJustInMind();
+			} catch (Exception e) {
+				setError("Initializing interfaces failed, provide a valid prototype directory");
+				e.printStackTrace();
+				clearText(true);
+				stopAlles.setDisable(true);
+				startAlles.setDisable(false);
+				return;
+			}
+			setText("starting guvnor app...");
+			//Guvnor.Start();
+			setText("starting simulator app...");
+			Simulator.Start();
+			//Guvnor.Open();
+			Simulator.Open();
+			setText("Everything started succefully!");
+			clearText(false);
+			startAlles.setDisable(true);
+			stopAlles.setDisable(false);
+		}
+	};
+	
 		if (getTranscript() == null || getPrototype() == null) {
 			setError("Please choose a transcript file and a prototype");
 		} else if (!getTranscript().endsWith(".txt")) {
 			setError("Only txt transcripts are allowed");
 		} else {
 			clearError();
-			Thread startThread = new Thread() {
-				@SuppressWarnings("deprecation")
-				public void run() {
-					setText("configuring workspace directory...");
-					try {
-						Workspace.InitJustInMind();
-					} catch (Exception e) {
-						setError("Initializing interfaces failed, provide a valid prototype directory");
-						e.printStackTrace();
-						clearText(true);
-						stopAlles.setDisable(true);
-						startAlles.setDisable(false);
-						return;
-					}
-					setText("starting guvnor app...");
-					Guvnor.Start();
-					setText("starting simulator app...");
-					Simulator.Start();
-					Guvnor.Open();
-					Simulator.Open();
-					setText("Everything started succefully!");
-					clearText(false);
-				}
-			};
 			startThread.start();
-			startAlles.setDisable(true);
-			stopAlles.setDisable(false);
 		}
 	}
 
