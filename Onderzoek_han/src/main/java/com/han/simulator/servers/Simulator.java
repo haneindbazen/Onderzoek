@@ -32,7 +32,7 @@ public class Simulator {
 	 * @see EventPusher
 	 * @return false or true if startup was successful
 	 */
-	public static boolean Start(){
+	public static void Start(){
 		boolean startSuccessFull = false;
 
         tomcat.setPort(9090);
@@ -43,29 +43,23 @@ public class Simulator {
         	Tomcat.addServlet(rootCtx, "eventPusher", new EventPusher());
         	rootCtx.addServletMapping("/pusher", "eventPusher");
 			tomcat.start();
-			startSuccessFull = true;
 		} catch (LifecycleException | ServletException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return startSuccessFull;
 	}
 
 	/**
 	 * Stopping Tomcat server
 	 * @return false or true if stop was successful
 	 */
-	public static boolean Stop() {
-
-		boolean stopSuccessFull = false;
+	public static void Stop() {
 		try {
 			tomcat.stop();
-			stopSuccessFull = true;
 		} catch (LifecycleException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return stopSuccessFull;
 	}
 	
 	/**

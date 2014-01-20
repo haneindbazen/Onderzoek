@@ -57,29 +57,6 @@ public class MainScreenController implements Initializable {
 	private static ChoiceBox<String> prototypeChooser;
 	@FXML
 	public static TextField delay;
-	
-	public Thread startThread = new Thread() {
-		@SuppressWarnings("deprecation")
-		public void run() {
-			setText("configuring workspace directory...");
-			try {
-				Workspace.InitJustInMind();
-			} catch (Exception e) {
-				setError("Initializing interfaces failed, provide a valid prototype directory");
-				e.printStackTrace();
-				clearText(true);
-				this.stop();
-			}
-			setText("starting guvnor app...");
-			Guvnor.Start();
-			setText("starting simulator app...");
-			Simulator.Start();
-			Guvnor.Open();
-			Simulator.Open();
-			setText("Everything started succefully!");
-			clearText(false);
-		}
-	};
 
 	public static String getTranscript() {
 		String chosenTranscript = transcriptChooser.getValue();
@@ -142,14 +119,36 @@ public class MainScreenController implements Initializable {
 	 * Starts everything
 	 */
 	public void StartAlles() {
-
 		if (getTranscript() == null || getPrototype() == null) {
-
 			setError("Please choose a transcript file and a prototype");
 		} else if (!getTranscript().endsWith(".txt")) {
 			setError("Only txt transcripts are allowed");
 		} else {
 			clearError();
+			Thread startThread = new Thread() {
+				@SuppressWarnings("deprecation")
+				public void run() {
+					setText("configuring workspace directory...");
+					try {
+						Workspace.InitJustInMind();
+					} catch (Exception e) {
+						setError("Initializing interfaces failed, provide a valid prototype directory");
+						e.printStackTrace();
+						clearText(true);
+						stopAlles.setDisable(true);
+						startAlles.setDisable(false);
+						return;
+					}
+					setText("starting guvnor app...");
+					Guvnor.Start();
+					setText("starting simulator app...");
+					Simulator.Start();
+					Guvnor.Open();
+					Simulator.Open();
+					setText("Everything started succefully!");
+					clearText(false);
+				}
+			};
 			startThread.start();
 			startAlles.setDisable(true);
 			stopAlles.setDisable(false);
@@ -160,7 +159,7 @@ public class MainScreenController implements Initializable {
 	 * Stops everything
 	 */
 	public void StopAlles() {
-		Thread t = new Thread() {
+		Thread stopThread = new Thread() {
 			@SuppressWarnings("deprecation")
 			public void run() {
 				setText("stopping guvnor...");
@@ -183,7 +182,7 @@ public class MainScreenController implements Initializable {
 			}
 		};
 		clearError();
-		t.start();
+		stopThread.start();
 		startAlles.setDisable(false);
 		stopAlles.setDisable(true);
 	}
@@ -223,7 +222,7 @@ public class MainScreenController implements Initializable {
 				for (String prototypeName : Workspace.listPrototypes()) {
 					prototypeChooser.getItems().add(prototypeName);
 				}
-				
+
 				installPanel.setVisible(false);
 				startAlles.setDisable(false);
 			}

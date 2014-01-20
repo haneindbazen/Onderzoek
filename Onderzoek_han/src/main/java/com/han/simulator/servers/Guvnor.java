@@ -12,10 +12,11 @@ import org.apache.catalina.startup.Bootstrap;
 import com.han.simulator.utils.Workspace;
 
 /**
-* This class starts and stops the guvnor app
-* @author Armand Ndizigiye
-* @version 0.1
-*/
+ * This class starts and stops the guvnor app
+ * 
+ * @author Armand Ndizigiye
+ * @version 0.1
+ */
 public class Guvnor {
 
 	static Bootstrap bootstrap = new Bootstrap();
@@ -30,7 +31,6 @@ public class Guvnor {
 		bootstrap.setCatalinaHome(tomcatDir);
 		try {
 			bootstrap.start();
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("Failed Tomcat");
@@ -41,21 +41,19 @@ public class Guvnor {
 	 * Stop the guvnor app in an installed Tomcat server
 	 */
 	public static void Stop() {
-		synchronized(tomcatRun){
-			tomcatRun.notify();
-			try {
-				bootstrap.stop();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		try {
+			bootstrap.stopServer();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
-	
-	public static void Open(){
+
+	public static void Open() {
 		if (Desktop.isDesktopSupported()) {
 			try {
-				Desktop.getDesktop().browse(new URL("http://localhost:8080/guvnor").toURI());
+				Desktop.getDesktop().browse(
+						new URL("http://localhost:8080/guvnor").toURI());
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -66,8 +64,8 @@ public class Guvnor {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-        }
-		
+		}
+
 	}
 
 }
