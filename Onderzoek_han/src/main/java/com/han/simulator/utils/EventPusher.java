@@ -98,12 +98,12 @@ public class EventPusher extends WebSocketServlet {
 			} catch (ArrayIndexOutOfBoundsException e) {
 				guvnorLink = "";
 			}
-			try {
-				Drools.Start(guvnorLink);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				try {
+					Drools.Start(guvnorLink);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 	}
 }

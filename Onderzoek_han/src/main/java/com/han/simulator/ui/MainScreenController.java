@@ -21,6 +21,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import com.han.simulator.servers.*;
+import com.han.simulator.utils.Drools;
 import com.han.simulator.utils.Workspace;
 
 /**
@@ -38,6 +39,10 @@ public class MainScreenController implements Initializable {
 	@FXML
 	private Button installAlles;
 	@FXML
+	private Button simulate;
+	@FXML
+	private Button simulatePauzeorResume;
+	@FXML
 	private ImageView waitImage;
 	@FXML
 	private ImageView errorImage;
@@ -52,11 +57,19 @@ public class MainScreenController implements Initializable {
 	@FXML
 	private static Pane installPanel;
 	@FXML
+	private static Pane simulatePanel;
+	@FXML
 	private static ChoiceBox<String> transcriptChooser;
 	@FXML
 	private static ChoiceBox<String> prototypeChooser;
 	@FXML
 	public static TextField delay;
+	@FXML
+	public TextField guvnorLink;
+
+	private String guvnoradress;
+
+	private Thread simulatorThread;
 
 	public static String getTranscript() {
 		String chosenTranscript = transcriptChooser.getValue();
@@ -114,35 +127,37 @@ public class MainScreenController implements Initializable {
 	/**
 	 * Starts everything
 	 */
-	public void StartAll() {Thread startThread = new Thread() {
-		@SuppressWarnings("deprecation")
-		public void run() {
-			stopAlles.setDisable(true);
-			startAlles.setDisable(true);
-			setText("configuring workspace directory...");
-			try {
-				Workspace.InitJustInMind();
-			} catch (Exception e) {
-				setError("Initializing interfaces failed, provide a valid prototype directory");
-				e.printStackTrace();
-				clearText(true);
+	public void StartAll() {
+		Thread startThread = new Thread() {
+			@SuppressWarnings("deprecation")
+			public void run() {
 				stopAlles.setDisable(true);
-				startAlles.setDisable(false);
-				return;
+				startAlles.setDisable(true);
+				setText("configuring workspace directory...");
+				try {
+					Workspace.InitJustInMind();
+				} catch (Exception e) {
+					setError("Initializing interfaces failed, provide a valid prototype directory");
+					e.printStackTrace();
+					clearText(true);
+					stopAlles.setDisable(true);
+					startAlles.setDisable(false);
+					return;
+				}
+				setText("starting guvnor app...");
+				// Guvnor.Start();
+				setText("starting simulator app...");
+				Simulator.Start();
+				// Guvnor.Open();
+				Simulator.Open();
+				setText("Everything started succefully!");
+				clearText(false);
+				startAlles.setDisable(true);
+				stopAlles.setDisable(false);
+				simulatePanel.setDisable(false);
 			}
-			setText("starting guvnor app...");
-			Guvnor.Start();
-			setText("starting simulator app...");
-			Simulator.Start();
-			Guvnor.Open();
-			Simulator.Open();
-			setText("Everything started succefully!");
-			clearText(false);
-			startAlles.setDisable(true);
-			stopAlles.setDisable(false);
-		}
-	};
-	
+		};
+
 		if (getTranscript() == null || getPrototype() == null) {
 			setError("Please choose a transcript file and a prototype");
 		} else if (!getTranscript().endsWith(".txt")) {
@@ -188,7 +203,6 @@ public class MainScreenController implements Initializable {
 	/**
 	 * Install for the first time use
 	 */
-
 	public void InstallAll() {
 		Thread t = new Thread() {
 			public void run() {
@@ -205,7 +219,6 @@ public class MainScreenController implements Initializable {
 	/**
 	 * Show options
 	 */
-
 	public void afterInstall() {
 		Platform.runLater(new Runnable() {
 			public void run() {
@@ -225,6 +238,55 @@ public class MainScreenController implements Initializable {
 				startAlles.setDisable(false);
 			}
 		});
+	}
+
+	public void Simulate() {
+		guvnoradress = guvnorLink.getText().trim();
+	    simulatorThread = new Thread() {
+			public void run() {
+					Platform.runLater(new Runnable() {
+						public void run() {
+							simulate.setDisable(true);
+							simulatePauzeorResume.setDisable(false);
+						}
+					});
+					try{
+						Platform.runLater(new Runnable() {
+							public void run() {
+								clearError();
+							}
+						});
+						Drools.Start(guvnoradress);
+					}
+					catch(Exception e){
+						Platform.runLater(new Runnable() {
+							public void run() {
+								simulate.setDisable(false);
+								simulatePauzeorResume.setDisable(true);
+							}
+						});
+						return;
+					}
+					Platform.runLater(new Runnable() {
+						public void run() {
+							simulate.setDisable(false);
+							simulatePauzeorResume.setDisable(true);
+						}
+					});
+			}
+		};
+		simulatorThread.start();
+	}
+
+	public void SimulatePauzeorResume() {
+		String buttontext = simulatePauzeorResume.getText();
+		if (buttontext.equals("Pauze")) {
+			simulatorThread.suspend();
+			simulatePauzeorResume.setText("Resume");
+		} else {
+			simulatorThread.resume();
+			simulatePauzeorResume.setText("Pauze");
+		}
 	}
 
 	@Override
