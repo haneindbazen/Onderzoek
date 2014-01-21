@@ -83,9 +83,17 @@ public class EventPusher extends WebSocketServlet {
 		 *            - the event message
 		 * @throws IOException
 		 */
-		public void sendMessage(String message) throws IOException {
+		public void sendMessage(String message,ArrayList<Associatie> associaties) throws IOException {
+			System.out.println("stuurt bericht");
 			getWsOutbound().writeTextMessage(CharBuffer.wrap(message));
-			getWsOutbound().writeTextMessage(CharBuffer.wrap("setframevalues"));
+			System.out.println("stuurt tweede bericht");
+			String associatiesText = "";
+			for(Associatie a : associaties){
+				if(a !=null){
+				associatiesText += "**"+a.getTag()+"*"+a.getInhoud();
+				}
+			}
+			getWsOutbound().writeTextMessage(CharBuffer.wrap("setframevalues#"+associatiesText));
 		}
 
 		@Override

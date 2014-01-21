@@ -20,8 +20,12 @@ public class Associatie {
 		this.tag = tag;
 	}
 
-	public String getMessage() {
+	public String getInhoud() {
 		return inhoud;
+	}
+
+	public void setInhoud(String inhoud) {
+		this.inhoud = inhoud;
 	}
 
 	public String getTag() {
@@ -30,27 +34,5 @@ public class Associatie {
 
 	public void setTag(String tag) {
 		this.tag = tag;
-	}
-
-	public void setMessage(String message) {
-		this.inhoud = message;
-	}
-	
-	/**
-	 * Push the event to the Browser
-	 * @param e - the occured event
-	 * @param interfaceName - the name of the interface for this event
-	 * @throws IOException
-	 */
-
-	public void PushEventToBrowser(Associatie e, String interfaceName)throws IOException {
-		for (EchoMessageInbound mi : EventPusher.clients) {
-			mi.sendMessage(e.getMessage()+"#"+interfaceName);
-		}
-
-	}
-	
-	public void Test(HashMap<String,String> test){
-		
 	}
 }
