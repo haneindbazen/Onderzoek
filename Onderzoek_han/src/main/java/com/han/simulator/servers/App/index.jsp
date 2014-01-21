@@ -46,14 +46,17 @@ margin: 10px 0px 10px 30px;
 	ws.onopen = function() {
 	};
 	ws.onmessage = function(event) {
-		if(event.data == "setframevalues"){
+		console.log(event.data);
+		var command = event.data.split("#")[0];
+		var value = event.data.split("#")[1];
+		if(command == "setframevalues"){
+			var command = 
 			$( document ).ready(function() {
 				$("#iframe").load( function() {
 				insertMeldingInfo(meldingValue);
+				console.log(value);
 				});
 			});
-			$("button").trigger( "click" );
-			console.log(getValue());
 		}
 		else{
 			melding = event.data;
