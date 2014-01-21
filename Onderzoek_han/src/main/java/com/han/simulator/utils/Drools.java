@@ -60,7 +60,12 @@ public class Drools {
 			ParserConfigurationException, IOException, SAXException, Exception {
 		setRemoteAddress(URL);
 		// readKnowledgeBase() for reading a local drl file
+		try{
 		kbase = readRemoteKnowledgeBase();
+		}
+		catch(RuntimeException e){
+		return;
+		}
 		ksession = kbase.newStatefulKnowledgeSession();
 		logger = KnowledgeRuntimeLoggerFactory.newFileLogger(ksession, "test");
 	}
@@ -76,7 +81,13 @@ public class Drools {
 	public static void Start(String guvnorLink) throws Exception {
 		try {
 			if (guvnorLink != null && !guvnorLink.equals("")) {
+				try{
 				Drools.Init(guvnorLink);
+				}
+				catch(RuntimeException e){
+					MainScreenController.setError("Please provide a valid Guvnor link");
+					return;
+					}
 			} else {
 				MainScreenController.setError("Please provide a valid Guvnor link");
 				throw new Exception("not a valid link");

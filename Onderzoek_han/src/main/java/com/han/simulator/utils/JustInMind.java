@@ -90,7 +90,7 @@ public class JustInMind {
 			TagNode alignmentBox = node.findElementByAttValue("id",
 					"alignmentBox", true, true);
 			alignmentBox.removeFromTree();
-			String html = cleaner.getInnerHtml(node);
+			String html = "<html>"+cleaner.getInnerHtml(node)+"</html>";
 			System.out.println("----------------");
 			TagNode screenNode = node.findElementByAttValue("class",
 					"screen firer ie-background commentable", true, true);

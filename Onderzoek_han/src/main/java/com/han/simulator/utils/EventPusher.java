@@ -85,6 +85,7 @@ public class EventPusher extends WebSocketServlet {
 		 */
 		public void sendMessage(String message) throws IOException {
 			getWsOutbound().writeTextMessage(CharBuffer.wrap(message));
+			getWsOutbound().writeTextMessage(CharBuffer.wrap("setframevalues"));
 		}
 
 		@Override
